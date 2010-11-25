@@ -9,7 +9,7 @@ var connect = function() {
 	};
 	conn.onmessage = function(evt){
 		data = JSON.parse(evt.data);
-		$('#messagesTable > tbody:last').append('<tr><td>'+
+		$('#messagesTable > tbody:last').prepend('<tr><td>'+
 		data['date']+'</td><td>'+
 		data['host']+'</td><td>'+
 		data['severity']+'</td><td>'+
