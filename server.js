@@ -27,6 +27,6 @@ var fs = require('fs')
 var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
 
 http.createServer(function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/plain'})
+	res.writeHead(200, {'Content-Type': 'text/html'})
 	res.end(application())
 }).listen(8080)
