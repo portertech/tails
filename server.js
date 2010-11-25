@@ -31,13 +31,12 @@ var haml = require('./lib/haml')
 var fs = require('fs')
 
 var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
-var jquery_js = fs.readFileSync('public/scripts/jquery-1.4.4.min.js', 'utf8')
 var websocket_js = fs.readFileSync('public/scripts/websocket.js', 'utf8')
 
 var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
 
 http.createServer(function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'})
-	res.write(header({ websocket_js: websocket_js, jquery_js: jquery_js }))
+	res.write(header({ websocket_js: websocket_js }))
 	res.end(application())
 }).listen(8080)
