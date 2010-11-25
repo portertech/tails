@@ -1,5 +1,10 @@
 var dgram = require('dgram')
 
+var ws = require('./lib/ws/server')
+
+websocket = ws.createServer()
+websocket.listen(8000)
+
 var syslog_regex = /<([0-9]{1,3})>([A-z]{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) (\S+) (.*)/
 
 syslog = dgram.createSocket('udp4')
@@ -15,6 +20,7 @@ syslog.on('message', function(msg_orig, rinfo) {
 			message: msg[4],
 		}
 		console.log(msg_info)
+		websocket.broadcast(msg_info)
 	}
 })
 
