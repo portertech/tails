@@ -20,7 +20,7 @@ syslog.on('message', function(msg_orig, rinfo) {
 			message: msg[4],
 		}
 		console.log(msg_info)
-		websocket.broadcast(msg_info)
+		websocket.broadcast(JSON.stringify(msg_info))
 	}
 })
 
