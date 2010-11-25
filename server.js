@@ -24,7 +24,7 @@ syslog.on('message', function(msg_orig, rinfo) {
 	}
 })
 
-syslog.bind(5140)
+syslog.bind(514)
 
 var http = require('http')
 var haml = require('./lib/haml')
@@ -39,4 +39,4 @@ http.createServer(function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'})
 	res.write(header({ websocket_js: websocket_js }))
 	res.end(application())
-}).listen(8080)
+}).listen(80)
