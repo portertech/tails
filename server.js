@@ -21,9 +21,12 @@ syslog.on('message', function(msg_orig, rinfo) {
 syslog.bind(5140)
 
 var http = require('http')
-var dgram = require('./lib/haml')
+var haml = require('./lib/haml')
+var fs = require('fs')
+
+var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'})
-  res.end('Hello World\n')
+	res.writeHead(200, {'Content-Type': 'text/plain'})
+	res.end(application())
 }).listen(8080)
