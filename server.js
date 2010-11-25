@@ -18,4 +18,11 @@ syslog.on('message', function(msg_orig, rinfo) {
 	}
 })
 
-syslog.bind(514)
+syslog.bind(5140)
+
+var http = require('http')
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'})
+  res.end('Hello World\n')
+}).listen(8080)
