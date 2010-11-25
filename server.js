@@ -10,7 +10,7 @@ syslog.on('message', function(msg_orig, rinfo) {
 		var msg_info = {
 			date: msg[2],
 			host: msg[3],
-			level: msg[1] - (facility * 8),
+			severity: msg[1] - (facility * 8),
 			facility: facility,
 			message: msg[4],
 		}
@@ -21,6 +21,7 @@ syslog.on('message', function(msg_orig, rinfo) {
 syslog.bind(5140)
 
 var http = require('http')
+var dgram = require('./lib/haml')
 
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'})
