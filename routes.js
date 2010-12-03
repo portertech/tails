@@ -1,6 +1,7 @@
 var clutch = require('./lib/clutch')
 var fs = require('fs')
 var haml = require('./lib/haml')
+var nstore = require('./lib/nstore')
 
 var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
 var websocket_js = fs.readFileSync('public/scripts/websocket.js', 'utf8')
