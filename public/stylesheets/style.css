@@ -52,6 +52,7 @@ div#content a:hover
 div#content table#messagesTable
 {
 	width: 100%;
+	border-collapse: collapse;
 }
 
 div#content table#messagesTable thead tr th.dat_col
@@ -75,9 +76,9 @@ div#content table#messagesTable tbody tr td.message div
 	width: 500px;
 }
 
-div#content table#messagesTable tbody tr td.message_expanded div
+div#content table#messagesTable tbody tr.message_expanded
 {
-	
+	background-color: #fde6d9;
 }
 
 .hideextra
