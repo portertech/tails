@@ -1,6 +1,13 @@
+!!!
 %html
 %head
-  %title Test
-  %script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
-  %script(src='http://portertech.no.de/javascript.js')
+  %title Tails
+  %script{ src: "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" }
+  %script{ src: "/javascript.js" }
+  %link{ href: "/style.css", rel: "stylesheet" }
 %body
+  #PageContainer.shadow
+    %header
+      #header_banner
+    #content
+      = yield

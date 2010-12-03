@@ -19,8 +19,7 @@ function js(req, res) {
 
 function landing(req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'})
-	res.write(header({ websocket_js: websocket_js }))
-	res.end(application())
+	res.end(header({ yield: application() }))
 }
 
 exports.urls = clutch.route404([['GET /style.css$', css],

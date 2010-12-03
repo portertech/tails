@@ -1,5 +1,3 @@
-<script type="text/javascript">
-//<![CDATA[
 var conn;
 var connect = function() {
   if (window["WebSocket"]) {
@@ -20,5 +18,3 @@ var connect = function() {
 };
 
 window.onload = connect;
-//]]>
-</script>
