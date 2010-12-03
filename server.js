@@ -1,4 +1,4 @@
-// Tails, because syslog rocks.
+// tails, because syslog rocks.
 var ws = require('./lib/ws/server')
 var dgram = require('dgram')
 var http = require('http')
