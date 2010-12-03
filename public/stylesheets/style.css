@@ -54,6 +54,18 @@ div#content table
 	width: 100%;
 }
 
+div#content table tr td div.message
+{
+	width: 500px;
+}
+
+.hideextra
+{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .shadow
 {
 	-moz-box-shadow: 0px 0px 10px #333;
