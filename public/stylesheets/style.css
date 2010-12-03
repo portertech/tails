@@ -49,20 +49,35 @@ div#content a:hover
 	color: #28bf44;
 }
 
-div#content table
+div#content table#messagesTable
 {
 	width: 100%;
 }
 
-div#content table tr.row:hover
+div#content table#messagesTable thead tr th.dat_col
+{
+	width: 110px;
+}
+
+div#content table#messagesTable thead tr th.msg_col
+{
+	width: 500px;
+}
+
+div#content table#messagesTable tbody tr.row:hover
 {
 	background-color: #f0f0f0;
 	cursor: pointer;
 }
 
-div#content table tr td div.message
+div#content table#messagesTable tbody tr td.message div
 {
 	width: 500px;
+}
+
+div#content table#messagesTable tbody tr td.message_expanded div
+{
+	
 }
 
 .hideextra
@@ -70,6 +85,12 @@ div#content table tr td div.message
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.showextra
+{
+	white-space: normal;
+	overflow: visible;
 }
 
 .shadow

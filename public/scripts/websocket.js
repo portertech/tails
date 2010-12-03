@@ -11,10 +11,10 @@ var connect = function() {
 		data['date']+'</td><td>'+
 		data['host']+'</td><td>'+
 		data['severity']+'</td><td>'+
-		data['facility']+'</td><td><div class="message hideextra">'+
+		data['facility']+'</td><td class="message"><div class="hideextra">'+
 		data['message']+'</div></td></tr>');
 		$('tr.row:first').click(function() {
-			alert('Yay');
+			$(this).children('td.message').children('div').toggleClass('hideextra');
 		});
 	};
   }
