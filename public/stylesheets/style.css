@@ -12,19 +12,29 @@ body
 
 header
 {
-	background-color: #000;
-	text-align: right;
+	background-color: #fd6512;
 }
 
 div#header_banner
 {
-	
+	width: 960px;
+	height: 80px;
+}
+
+div#header_banner h1
+{
+	font-size: 50px;
+	margin-left: 15px;
+	text-shadow: #7f3309 -1px -1px 0px;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #fff;
 }
 
 div#content
 {
 	background-color: #fff;
 	text-align: left;
+	padding: 7px;
 }
 
 div#content a
@@ -39,8 +49,13 @@ div#content a:hover
 	color: #28bf44;
 }
 
+div#content table
+{
+	width: 100%;
+}
 
-.shadow {
+.shadow
+{
 	-moz-box-shadow: 0px 0px 10px #333;
 	-webkit-box-shadow: 0px 0px 10px #333;
 	box-shadow: 0 0 10px #333;
