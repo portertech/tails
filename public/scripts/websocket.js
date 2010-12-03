@@ -7,12 +7,15 @@ var connect = function() {
 	};
 	conn.onmessage = function(evt){
 		data = JSON.parse(evt.data);
-		$('#messagesTable > tbody:last').prepend('<tr><td>'+
+		$('#messagesTable > tbody:last').prepend('<tr class="row"><td>'+
 		data['date']+'</td><td>'+
 		data['host']+'</td><td>'+
 		data['severity']+'</td><td>'+
 		data['facility']+'</td><td><div class="message hideextra">'+
 		data['message']+'</div></td></tr>');
+		$('tr.row:first').click(function() {
+			alert('Yay');
+		});
 	};
   }
 };
