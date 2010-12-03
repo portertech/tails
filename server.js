@@ -1,6 +1,7 @@
-var dgram = require('dgram')
-
+// Tails, because syslog rocks.
 var ws = require('./lib/ws/server')
+var dgram = require('dgram')
+var http = require('http')
 
 websocket = ws.createServer()
 websocket.listen(8000)
@@ -64,19 +65,5 @@ syslog.on('message', function(msg_orig, rinfo) {
 syslog_port = parseInt(process.ENV['TAILS_SYSLOG_PORT']) || 514
 syslog.bind(syslog_port)
 
-var http = require('http')
-var clutch = require('./lib/clutch')
-var haml = require('./lib/haml')
-var fs = require('fs')
-
-var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
-var websocket_js = fs.readFileSync('public/scripts/websocket.js', 'utf8')
-var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
-
 var http_port = parseInt(process.ENV['TAILS_HTTP_PORT']) || 80
-
-http.createServer(function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/html'})
-	res.write(header({ websocket_js: websocket_js }))
-	res.end(application())
-}).listen(http_port)
+http.createServer(require('./routes').urls).listen(http_port)
