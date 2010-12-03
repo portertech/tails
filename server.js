@@ -62,8 +62,8 @@ syslog.on('message', function(msg_orig, rinfo) {
 	}
 })
 
-syslog_port = parseInt(process.ENV['TAILS_SYSLOG_PORT']) || 514
+syslog_port = parseInt(process.ENV.TAILS_SYSLOG_PORT) || 514
 syslog.bind(syslog_port)
 
-var http_port = parseInt(process.ENV['TAILS_HTTP_PORT']) || 80
+var http_port = parseInt(process.ENV.TAILS_HTTP_PORT) || 80
 http.createServer(require('./routes').urls).listen(http_port)
