@@ -6,7 +6,7 @@ var http = require('http')
 websocket = ws.createServer()
 websocket.listen(8000)
 
-var syslog_regex = /<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/i
+var syslog_regex = /<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/x
 
 var severity_lookup = {
 	0: 'emerg',
