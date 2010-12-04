@@ -48,6 +48,7 @@ var facility_lookup = {
 
 syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
+	console.log(msg_orig.toString())
 	var msg = syslog_regex.exec(msg_orig)
 	if (msg != null) {
 		var facility = Math.floor(msg[1] / 8)
