@@ -52,7 +52,7 @@ function save_term(req, res) {
 				if (err) {
 					res.writeHead(500, "Failed to save term.", {'Content-Type': 'text/html'})
 				} else {
-					res.writeHead(200, "OK", {'Content-Type': 'text/html'})
+					res.writeHead(201, "OK", {'Content-Type': 'text/html'})
 				}
 				res.end()
 			})
@@ -63,7 +63,19 @@ function save_term(req, res) {
 	})
 }
 
+function remove_term(req, res, key) {
+	terms.remove(key, function (err) {
+		if (err) {
+			res.writeHead(500, "Failed to remove term.", {'Content-Type': 'text/html'})
+		} else {
+			res.writeHead(200, "OK", {'Content-Type': 'text/html'})
+		}
+		res.end()
+	})
+}
+
 exports.urls = clutch.route404([['GET /$', landing],
 								['GET /terms$', get_terms],
 								['POST /terms$', save_term],
+								['DELETE /terms/(.*)$', remove_term],
 								['GET /(.*)/(.*)$', static]])
