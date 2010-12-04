@@ -37,7 +37,7 @@ function get_terms(req, res) {
 			res.writeHead(500, "Failed to get terms.", {'Content-Type': 'text/html'})
 		} else {
 			res.writeHead(200, "OK", {'Content-Type': 'text/html'})
-			console.log(results)
+			res.write(JSON.stringify(results))
 		}
 		res.end()
 	})
