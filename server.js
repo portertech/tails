@@ -6,8 +6,6 @@ var http = require('http')
 websocket = ws.createServer()
 websocket.listen(8000)
 
-var syslog_regex = /<([^>]+)>([A-z]{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) (\S+) (.*)/
-
 var severity_lookup = {
 	0: 'emerg',
 	1: 'alert',
@@ -48,9 +46,8 @@ var facility_lookup = {
 
 syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
-	console.log(msg_orig.toString())
-	var msg = syslog_regex.exec(msg_orig)
-	if (msg != null) {
+	var msg = (/<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/).exec(msg_orig)
+	if (msg) {
 		var facility = Math.floor(msg[1] / 8)
 		var msg_info = {
 			date: msg[2],

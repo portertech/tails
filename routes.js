@@ -46,7 +46,7 @@ function get_terms(req, res) {
 function save_term(req, res) {
 	req.on('data', function(chunk) {
 		var term = require('querystring').parse(chunk).term
-		if (term != null) {
+		if (term) {
 			terms.save(null, {'term': term}, function (err) {
 				if (err) {
 					res.writeHead(500, "Failed to save term.", {'Content-Type': 'text/html'})
