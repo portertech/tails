@@ -1,0 +1,1 @@
+{"name":"haml","description":"Haml ported to server-side Javascript. This is a traditional server-side templating language.","keywords":["haml","template"],"main":"./lib/haml","author":{"name":"Tim Caswell","email":"tim@creationix.com"},"version":"0.2.5","_id":"haml@0.2.5","engines":{"node":"*"},"_nodeSupported":true,"_npmVersion":"0.2.7-3","_nodeVersion":"v0.2.5"}

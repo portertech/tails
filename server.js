@@ -1,5 +1,6 @@
 // tails, because syslog rocks.
-var ws = require('./lib/ws/server')
+require.paths.unshift('./vendor')
+var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
 

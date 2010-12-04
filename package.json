@@ -1,0 +1,10 @@
+{
+	'name': 'tails',
+	'version': '0.0.1',
+	'dependencies': {
+		'websocket-server': '',
+		'nstore': '',
+		'haml': '',
+		'clutch': ''
+	}
+}

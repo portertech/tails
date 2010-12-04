@@ -1,7 +1,8 @@
-var nstore = require('./lib/nstore').extend(require('./lib/nstore/query')())
+require.paths.unshift('./vendor')
+var nstore = require('nstore').extend(require('nstore/query')())
 var fs = require('fs')
-var haml = require('./lib/haml')
-var clutch = require('./lib/clutch')
+var haml = require('haml')
+var clutch = require('clutch')
 
 var terms = nstore.new('./db/terms.db')
 
