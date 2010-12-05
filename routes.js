@@ -1,5 +1,5 @@
 require.paths.unshift('./vendor')
-var nstore = require('nstore').extend(require('nstore/query')())
+var nstore = require('nstore').extend(require('nstore/query')()).extend(require('nstore/cache')(2100))
 var fs = require('fs')
 var haml = require('haml')
 var clutch = require('clutch')
