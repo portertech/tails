@@ -1,5 +1,8 @@
 %div#alerts
-  %div#alertstext Alerts (5)
+  %div#alertstext
+    Alerts (
+    %span#alertsnum 0
+    )
 %div#alertscontainer.container_hidden
   %div#tags
     %div.tag
@@ -20,6 +23,7 @@
         %th.sev_col Severity
         %th.fac_col Facility
         %th.msg_col Message
+    %tbody
 
 %table#messagesTable
   %thead
