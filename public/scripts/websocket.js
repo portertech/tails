@@ -1,6 +1,8 @@
 var conn;
 var maxNumRows = 200;
 var alertsCount = 0;
+var tags = new Array('error', 'ssh', 'denied');
+
 var connect = function() {
   if (window["WebSocket"]) {
     conn = new WebSocket("ws://portertech.no.de:8000");
@@ -10,7 +12,15 @@ var connect = function() {
 	conn.onmessage = function(evt) {
 		data = JSON.parse(evt.data);
 		
-		if (/ssh/i.test(data['message'])) {
+		var matchedTag = 0;
+		for (key in tags) {
+			var re = new RegExp(tags[key], 'i');
+			if (re.test(data['message'])) {
+				matchedTag = 1;
+			}
+		}
+		
+		if (matchedTag == 1) {
 			$('#alertsnum').html(++alertsCount);
 			
 			$('#alertsTable > tbody:last').prepend('<tr class="row"><td>'+
