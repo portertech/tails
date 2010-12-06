@@ -5,6 +5,7 @@
 		'websocket-server': '',
 		'nstore': '',
 		'haml': '',
-		'clutch': ''
+		'clutch': '',
+		'sanitizer': '',
 	}
 }

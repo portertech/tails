@@ -3,6 +3,7 @@ require.paths.unshift('./vendor')
 var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
+var sanitizer = require('sanitizer')
 
 websocket = ws.createServer()
 websocket.listen(8000)
@@ -52,10 +53,10 @@ syslog.on('message', function(msg_orig, rinfo) {
 		var facility = Math.floor(msg[1] / 8)
 		var msg_info = {
 			date: msg[2],
-			host: msg[3],
+			host: sanitizer.escape(msg[3]),
 			severity: severity_lookup[msg[1] - (facility * 8)],
 			facility: facility_lookup[facility],
-			message: msg[4],
+			message: sanitizer.escape(msg[4]),
 		}
 		websocket.broadcast(JSON.stringify(msg_info))
 	}
