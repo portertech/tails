@@ -68,7 +68,7 @@ function remove_term(req, res, key) {
 		if (err) {
 			res.writeHead(500, "Failed to remove term.", {'Content-Type': 'text/html'})
 		} else {
-			res.writeHead(200, "OK", {'Content-Type': 'text/html'})
+			res.writeHead(204)
 		}
 		res.end()
 	})
