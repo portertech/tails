@@ -1,6 +1,6 @@
 body
 {
-	font: normal normal normal 13px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+	font: normal normal normal 13px/1.5 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
 	background-color: #ddd;
 }
 
@@ -49,17 +49,18 @@ div#content a:hover
 	color: #28bf44;
 }
 
-div#content div#alerts
+div#content div#tab_container
 {
 	padding: 1px;
 }
 
-div#content div#alerts div#alertstext
+div#content div#tab_container div.tab_text
 {
 	padding: 3px 10px;
-	color: #ffffff;
-	background-color: #fd6512;
+	color: #666;
+	background-color: #e0e0e0;
 	font-weight: bold;
+	font-size: 12px;
 	display: inline;
 	-webkit-border-top-left-radius: 6px;
 	-webkit-border-top-right-radius: 6px;
@@ -70,7 +71,13 @@ div#content div#alerts div#alertstext
 	cursor: pointer;
 }
 
-div#content div#alertscontainer
+div#content div#tab_container div.tab_selected
+{
+	color: #fff;
+	background-color: #fd6512;
+}
+
+div#content div#logs_container
 {
 	border: 1px solid #fd6512;
 	padding: 7px;
@@ -80,29 +87,22 @@ div#content div#alertscontainer
 	border-radius: 6px;
 }
 
-div#content div#alertscontainer div#alertsinfo
+div#content div#logs_container div.logs_hidden
 {
-	padding: 3px 10px;
-	color: #333;
-	background-color: #e0e0e0;
-	font-weight: bold;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	text-align: center;
+	display: none;
 }
 
-div#content div#alertscontainer div#tags
+div#content div#logs_container div#tags
 {
 	
 }
 
-div#content div#alertscontainer div#tags:first-child
+div#content div#logs_container div#tags:first-child
 {
 	margin-left: 0;
 }
 
-div#content div#alertscontainer div#tags div.tag
+div#content div#logs_container div#tags div.tag
 {
 	float: left;
 	margin-left: 3px;
@@ -116,22 +116,16 @@ div#content div#alertscontainer div#tags div.tag
 	border-radius: 6px;
 }
 
-div#content div#alertscontainer div#tags div a
+div#content div#logs_container div#tags div a
 {
 	margin-left: 6px;
 	color: #333;
 	cursor: pointer;
 }
 
-div#content div#alertscontainer div#tags div a:hover
+div#content div#logs_container div#tags div a:hover
 {
 	color: #fd6512;
-}
-
-div#content div.container_hidden
-{
-	display: none;
-	height: 1px;
 }
 
 div#content table
@@ -148,7 +142,7 @@ div#content table#alertsTable
 
 div#content table#messagesTable
 {
-	margin-top: 20px;
+	
 }
 
 div#content table#alertsTable thead tr th.dat_col

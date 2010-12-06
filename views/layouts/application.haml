@@ -1,36 +1,39 @@
-%div#alerts
-  %div#alertstext
+%div#tab_container
+  %div#all_text.tab_text.tab_selected
+    All
+  %div#alerts_text.tab_text
     Alerts (
     %span#alertsnum 0
     )
-%div#alertscontainer.container_hidden
-  %div#tags
-    %div.tag
-      error
-      %a(href: '#') x
-    %div.tag
-      ssh
-      %a(href: '#') x
-    %div.tag
-      denied
-      %a(href: '#') x
-    %div.clear
-  %table#alertsTable
-    %thead
-      %tr
-        %th.dat_col Date
-        %th.hos_col Host
-        %th.sev_col Severity
-        %th.fac_col Facility
-        %th.msg_col Message
-    %tbody
-
-%table#messagesTable
-  %thead
-    %tr
-      %th.dat_col Date
-      %th.hos_col Host
-      %th.sev_col Severity
-      %th.fac_col Facility
-      %th.msg_col Message
-  %tbody
+%div#logs_container
+  %div#all
+    %table#messagesTable
+      %thead
+        %tr
+          %th.dat_col Date
+          %th.hos_col Host
+          %th.sev_col Severity
+          %th.fac_col Facility
+          %th.msg_col Message
+      %tbody
+  %div#alerts.logs_hidden
+    %div#tags
+      %div.tag
+        error
+        %a(href: '#') x
+      %div.tag
+        ssh
+        %a(href: '#') x
+      %div.tag
+        denied
+        %a(href: '#') x
+      %div.clear
+    %table#alertsTable
+      %thead
+        %tr
+          %th.dat_col Date
+          %th.hos_col Host
+          %th.sev_col Severity
+          %th.fac_col Facility
+          %th.msg_col Message
+      %tbody
