@@ -1,15 +1,15 @@
 !!!
 %html
-%head
-  %title tails
-  %script{ src: "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" }
-  %script{ src: "/scripts/websocket.js" }
-  %script{ src: "/scripts/main.js" }
-  %link{ href: "/stylesheets/style.css", rel: "stylesheet" }
-%body
-  #PageContainer.shadow
-    %header
-      #header_banner
-        %h1 tails
-    #content
-      = yield
+  %head
+    %title tails
+    %script{ src: "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" }
+    %script{ src: "/scripts/websocket.js" }
+    %script{ src: "/scripts/main.js" }
+    %link{ href: "/stylesheets/style.css", rel: "stylesheet" }
+  %body
+    #PageContainer.shadow
+      %header
+        #header_banner
+          %h1 tails
+      #content
+        = yield
