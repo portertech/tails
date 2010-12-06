@@ -12,6 +12,7 @@ var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8')
 function static(req, res, dir, file) {
 	fs.readFile('./public/' + dir + '/' + file, function (err, data) {
 		if (err) {
+			console.log(err)
 			res.writeHead(404, {'Content-Type': 'text/html'})
 		} else {
 			if (dir == 'scripts') {
@@ -35,6 +36,7 @@ function landing(req, res) {
 function get_terms(req, res) {
 	terms.all(function (err, results) {
 		if (err) {
+			console.log(err)
 			res.writeHead(500, "Failed to get terms.", {'Content-Type': 'text/html'})
 		} else {
 			res.writeHead(200, "OK", {'Content-Type': 'text/html'})
@@ -50,6 +52,7 @@ function save_term(req, res) {
 		if (term) {
 			terms.save(null, {'term': term}, function (err) {
 				if (err) {
+					console.log(err)
 					res.writeHead(500, "Failed to save term.", {'Content-Type': 'text/html'})
 				} else {
 					res.writeHead(201, "OK", {'Content-Type': 'text/html'})
@@ -66,6 +69,7 @@ function save_term(req, res) {
 function remove_term(req, res, key) {
 	terms.remove(key, function (err) {
 		if (err) {
+			console.log(err)
 			res.writeHead(500, "Failed to remove term.", {'Content-Type': 'text/html'})
 		} else {
 			res.writeHead(204)
