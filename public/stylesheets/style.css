@@ -33,7 +33,7 @@ div#header_banner h1
 div#content
 {
 	background-color: #fff;
-	text-align: left;
+	text-align: center;
 	padding: 7px;
 }
 
@@ -49,15 +49,121 @@ div#content a:hover
 	color: #28bf44;
 }
 
-div#content table#messagesTable
+div#content div#alerts
 {
+	padding: 1px;
+}
+
+div#content div#alerts div#alertstext
+{
+	padding: 3px 10px;
+	color: #ffffff;
+	background-color: #fd6512;
+	font-weight: bold;
+	display: inline;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	cursor: pointer;
+}
+
+div#content div#alertscontainer
+{
+	border: 1px solid #fd6512;
+	padding: 7px;
+	text-align: left;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+div#content div#alertscontainer div#alertsinfo
+{
+	padding: 3px 10px;
+	color: #333;
+	background-color: #e0e0e0;
+	font-weight: bold;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	text-align: center;
+}
+
+div#content div#alertscontainer div#tags
+{
+	
+}
+
+div#content div#alertscontainer div#tags:first-child
+{
+	margin-left: 0;
+}
+
+div#content div#alertscontainer div#tags div.tag
+{
+	float: left;
+	margin-left: 3px;
+	margin-right: 3px;
+	padding: 3px 10px;
+	color: #666;
+	font-weight: bold;
+	background-color: #e0e0e0;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+div#content div#alertscontainer div#tags div a
+{
+	margin-left: 6px;
+	color: #333;
+	cursor: pointer;
+}
+
+div#content div#alertscontainer div#tags div a:hover
+{
+	color: #fd6512;
+}
+
+div#content div.container_hidden
+{
+	display: none;
+	height: 1px;
+}
+
+div#content table
+{
+	text-align: left;
 	width: 100%;
 	border-collapse: collapse;
+}
+
+div#content table#alertsTable
+{
+	margin-top: 20px;
+}
+
+div#content table#messagesTable
+{
+	margin-top: 20px;
+}
+
+div#content table#alertsTable thead tr th.dat_col
+{
+	width: 110px;
 }
 
 div#content table#messagesTable thead tr th.dat_col
 {
 	width: 110px;
+}
+
+div#content table#alertsTable thead tr th.msg_col
+{
+	width: 500px;
 }
 
 div#content table#messagesTable thead tr th.msg_col
@@ -92,6 +198,11 @@ div#content table#messagesTable tbody tr.message_expanded
 {
 	white-space: normal;
 	overflow: visible;
+}
+
+div.clear
+{
+	clear: both;
 }
 
 .shadow

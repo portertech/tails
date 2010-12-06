@@ -1,3 +1,26 @@
+%div#alerts
+  %div#alertstext Alerts (5)
+%div#alertscontainer.container_hidden
+  %div#tags
+    %div.tag
+      error
+      %a(href: '#') x
+    %div.tag
+      ssh
+      %a(href: '#') x
+    %div.tag
+      denied
+      %a(href: '#') x
+    %div.clear
+  %table#alertsTable
+    %thead
+      %tr
+        %th.dat_col Date
+        %th.hos_col Host
+        %th.sev_col Severity
+        %th.fac_col Facility
+        %th.msg_col Message
+
 %table#messagesTable
   %thead
     %tr
