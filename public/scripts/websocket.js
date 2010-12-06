@@ -1,5 +1,5 @@
 var conn;
-var maxNumRows = 50;
+var maxNumRows = 200;
 var connect = function() {
   if (window["WebSocket"]) {
     conn = new WebSocket("ws://127.0.0.1:8000");
