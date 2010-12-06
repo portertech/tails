@@ -39,7 +39,7 @@ function get_terms(req, res) {
 			console.log(err)
 			res.writeHead(500, "Failed to get terms.", {'Content-Type': 'text/html'})
 		} else {
-			res.writeHead(200, "OK", {'Content-Type': 'text/html'})
+			res.writeHead(200, {'Content-Type': 'text/html'})
 			res.write(JSON.stringify(results))
 		}
 		res.end()
@@ -50,17 +50,17 @@ function save_term(req, res) {
 	req.on('data', function(chunk) {
 		var term = require('querystring').parse(chunk).term
 		if (term) {
-			terms.save(null, {'term': term}, function (err) {
+			terms.save(null, {'term': term}, function (err, key) {
 				if (err) {
 					console.log(err)
 					res.writeHead(500, "Failed to save term.", {'Content-Type': 'text/html'})
 				} else {
-					res.writeHead(201, "OK", {'Content-Type': 'text/html'})
+					res.writeHead(201, key, {'Content-Type': 'text/html'})
 				}
 				res.end()
 			})
 		} else {
-			res.writeHead(500, "Missing term.", {'Content-Type': 'text/html'})
+			res.writeHead(400, "Missing term.", {'Content-Type': 'text/html'})
 			res.end()
 		}
 	})
