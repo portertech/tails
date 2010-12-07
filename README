@@ -1,0 +1,7 @@
+Aggregate your syslog messages & filter for those that matter.
+
+Tails is a side project of Sean Porter & Justin Kolberg.  
+
+Requirements:
+  - Node.js http://nodejs.org/
+  - A browser with WebSocket support http://en.wikipedia.org/wiki/WebSockets#Browsers_supporting_WebSocket
