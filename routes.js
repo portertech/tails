@@ -80,7 +80,7 @@ function remove_term(req, res, key) {
 }
 
 exports.urls = clutch.route404([['GET /$', landing],
-								['GET /terms$', get_terms],
-								['POST /terms$', save_term],
-								['DELETE /terms/(.*)$', remove_term],
-								['GET /(.*)/(.*)$', static]])
+				['GET /terms$', get_terms],
+				['POST /terms$', save_term],
+				['DELETE /terms/(.*)$', remove_term],
+				['GET /(.*)/(.*)$', static]])
