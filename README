@@ -2,6 +2,9 @@ Aggregate your syslog messages & filter for those that matter.
 
 Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
+Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
+
+Demo: http://portertech.no.de/
 
 Requirements:
 
