@@ -5,7 +5,7 @@ Tails is a side project of Sean Porter & Justin Kolberg. Live syslog tailing wit
 
 Requirements:
 
-  - rsyslog or syslog-ng installed on your hosts & configured for remote logging
+  - rsyslog or syslog-ng installed & configured on your hosts for remote logging
 
   - Node.js for the Tails server http://nodejs.org/
 
