@@ -4,6 +4,28 @@ body
 	background-color: #ddd;
 }
 
+div.coders
+{
+	margin: 0 auto;
+	text-align: right;
+	width: 960px;
+	color: #333;
+	font-size: 13px;
+	text-shadow: #fff 1px 1px 0px;
+	padding-right: 3px;
+}
+
+div.coders a
+{
+	color: #333;
+	text-decoration: none;
+}
+
+div.coders a:hover
+{
+	color: #fd6512;
+}
+
 #PageContainer
 {
 	margin: 0 auto;
