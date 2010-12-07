@@ -4,7 +4,7 @@ var alertsCount = 0;
 
 var connect = function() {
   if (window['WebSocket']) {
-    conn = new WebSocket('ws://' + location.hostname + ':8000');
+    conn = new WebSocket('ws://portertech.no.de:8000');
 	conn.onopen = function() {
 		//alert('Connected to the WebSocket!!'); // Uncomment this if you're in doubt that your browser supports WebSockets
 	};
@@ -17,7 +17,7 @@ var connect = function() {
 				var re = new RegExp(terms[key], 'i');
 				if (re.test(data['message'])) {
 					matchedTag = 1;
-					data['message'] = data['message'].replace(terms[key], '<span style="background-color: #fd8645;">'+terms[key]+'</span>');
+					var alerts_message = data['message'].replace(terms[key], '<span style="background-color: #fd8645;">'+terms[key]+'</span>');
 				}
 			}
 		}
@@ -30,7 +30,7 @@ var connect = function() {
 			data['host']+'</td><td>'+
 			data['severity']+'</td><td>'+
 			data['facility']+'</td><td class="message"><div class="hideextra">'+
-			data['message']+'</div></td></tr>');
+			alerts_message+'</div></td></tr>');
 			
 			$('#alertsTable > tbody > tr.row:first').click(function() {
 				$(this).toggleClass('message_expanded');
