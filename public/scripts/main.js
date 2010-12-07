@@ -24,6 +24,24 @@ function getTermsForArray() {
 	}});
 }
 
+function addTerm() {
+	var new_tag_val = $('div.tag_adder > input').val();
+	if (terms.indexOf(new_tag_val) == -1) {
+		$.ajax({ url: '/terms', type: 'POST', data: { term: new_tag_val }, timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
+			// success
+			$('div.tag_adder > input').val('');
+			terms.push(new_tag_val);
+			$('div#tags').append('<div id="'+data+'" class="tag" style="display: none;">'+new_tag_val+' <a href="#">x</a>');
+			$('div#'+data).fadeIn('normal');
+			addedTerm();
+			$.jGrowl('The term "'+new_tag_val+'" was added successfully!');
+		}});
+	} else {
+		$('div.tag_adder > input').val('');
+		$.jGrowl('The term "'+new_tag_val+'" already exists!');
+	}
+}
+
 function getTerms() {
 	$.ajax({ url: '/terms', type: 'GET', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 		// success
@@ -63,21 +81,14 @@ $(document).ready(function() {
 	
 	getTerms();
 	
-	$('div.tag_adder > a').click(function() {
+	$('div.tag_adder > input').keyup(function(e) {
 		var new_tag_val = $('div.tag_adder > input').val();
-		if (terms.indexOf(new_tag_val) == -1) {
-			$.ajax({ url: '/terms', type: 'POST', data: { term: new_tag_val }, timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
-				// success
-				$('div.tag_adder > input').val('');
-				terms.push(new_tag_val);
-				$('div#tags').append('<div id="'+data+'" class="tag" style="display: none;">'+new_tag_val+' <a href="#">x</a>');
-				$('div#'+data).fadeIn('normal');
-				addedTerm();
-				$.jGrowl('The term "'+new_tag_val+'" was added successfully!');
-			}});
-		} else {
-			$('div.tag_adder > input').val('');
-			$.jGrowl('The term "'+new_tag_val+'" already exists!');
+		if((e.keyCode == 13) && (new_tag_val != '')) {
+			addTerm();
 		}
+	});
+	
+	$('div.tag_adder > a').click(function() {
+		addTerm();
 	});
 });
