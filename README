@@ -1,7 +1,30 @@
 Aggregate your syslog messages & filter for those that matter.
 
-Tails is a side project of Sean Porter & Justin Kolberg.  
+Tails is a side project of Sean Porter & Justin Kolberg. Live syslog tailing with term filtering.
+
 
 Requirements:
-  - Node.js http://nodejs.org/
-  - A browser with WebSocket support http://en.wikipedia.org/wiki/WebSockets#Browsers_supporting_WebSocket
+
+  - rsyslog or syslog-ng installed on your hosts & configured for remote logging
+
+  - Node.js for the Tails server http://nodejs.org/
+
+  - A browser with WebSocket support for the client http://en.wikipedia.org/wiki/WebSockets#Browsers_supporting_WebSocket
+
+
+How it works:
+
+  Tails accepts syslog messages on the default UDP port (514), parses, and then broadcasts them to the client using WebSockets.
+
+  A user can create filter terms, matching messages are considered to be alerts. Alerts are organized under a separate tab.
+
+  Messages are non-persistent and they are automatically pruned.
+
+
+Next:
+
+  Multi-tenant
+
+  Pause
+
+  Export
