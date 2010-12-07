@@ -55,7 +55,8 @@ function save_term(req, res) {
 					console.log(err)
 					res.writeHead(500, 'Failed to save term.', {'Content-Type': 'text/plain'})
 				} else {
-					res.writeHead(201, key, {'Content-Type': 'text/plain'})
+					res.writeHead(201, {'Content-Type': 'text/plain'})
+					res.write(key)
 				}
 				res.end()
 			})

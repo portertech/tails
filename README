@@ -25,6 +25,6 @@ Next:
 
   Multi-tenant
 
-  Pause
+  Pause & resume tail (buffer incoming messages)
 
-  Export
+  Export paused tail to csv
