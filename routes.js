@@ -13,7 +13,7 @@ function static(req, res, dir, file) {
 	fs.readFile('./public/' + dir + '/' + file, function (err, data) {
 		if (err) {
 			console.log(err)
-			res.writeHead(404, {'Content-Type': 'text/html'})
+			res.writeHead(404, {'Content-Type': 'text/plain'})
 		} else {
 			if (dir == 'scripts') {
 				res.writeHead(200, {'Content-Type': 'text/javascript'})
@@ -37,9 +37,9 @@ function get_terms(req, res) {
 	terms.all(function (err, results) {
 		if (err) {
 			console.log(err)
-			res.writeHead(500, "Failed to get terms.", {'Content-Type': 'text/html'})
+			res.writeHead(500, 'Failed to get terms.', {'Content-Type': 'text/plain'})
 		} else {
-			res.writeHead(200, {'Content-Type': 'text/html'})
+			res.writeHead(200, {'Content-Type': 'text/plain'})
 			res.write(JSON.stringify(results))
 		}
 		res.end()
@@ -53,14 +53,14 @@ function save_term(req, res) {
 			terms.save(null, {'term': term}, function (err, key) {
 				if (err) {
 					console.log(err)
-					res.writeHead(500, "Failed to save term.", {'Content-Type': 'text/html'})
+					res.writeHead(500, 'Failed to save term.', {'Content-Type': 'text/plain'})
 				} else {
-					res.writeHead(201, key, {'Content-Type': 'text/html'})
+					res.writeHead(201, key, {'Content-Type': 'text/plain'})
 				}
 				res.end()
 			})
 		} else {
-			res.writeHead(400, "Missing term.", {'Content-Type': 'text/html'})
+			res.writeHead(400, 'Missing term.', {'Content-Type': 'text/plain'})
 			res.end()
 		}
 	})
@@ -70,7 +70,7 @@ function remove_term(req, res, key) {
 	terms.remove(key, function (err) {
 		if (err) {
 			console.log(err)
-			res.writeHead(500, "Failed to remove term.", {'Content-Type': 'text/html'})
+			res.writeHead(500, 'Failed to remove term.', {'Content-Type': 'text/plain'})
 		} else {
 			res.writeHead(204)
 		}
