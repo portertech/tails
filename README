@@ -1,6 +1,6 @@
 Aggregate your syslog messages & filter for those that matter.
 
-Tails is a side project of Sean Porter & Justin Kolberg. Live syslog tailing with term filtering.
+Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
 
 Requirements:
@@ -9,22 +9,22 @@ Requirements:
 
   - Node.js for the Tails server http://nodejs.org/
 
-  - A browser with WebSocket support for the client http://en.wikipedia.org/wiki/WebSockets#Browsers_supporting_WebSocket
+  - A browser with WebSocket support for the client
 
 
 How it works:
 
-  Tails accepts syslog messages on the default UDP port (514), parses, and then broadcasts them to the client using WebSockets.
+  Tails accepts syslog messages on port 514 (UDP), parses, then broadcasts them to the client using a WebSocket.
 
-  A user can create filter terms, matching messages are considered to be alerts. Alerts are organized under a separate tab.
+  You can create filter terms, matching messages are considered to be alerts. Alerts are organized under a separate tab.
 
   Messages are non-persistent and they are automatically pruned.
 
 
 Next:
 
-  Multi-tenant
+  - Multi-tenant
 
-  Pause & resume tail (buffer incoming messages)
+  - Pause & resume tail (buffer incoming messages)
 
-  Export paused tail to csv
+  - Export paused tail to csv
