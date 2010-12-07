@@ -30,6 +30,11 @@ var connect = function() {
 			data['facility']+'</td><td class="message"><div class="hideextra">'+
 			data['message']+'</div></td></tr>');
 			
+			$('#alertsTable > tbody > tr.row:first').click(function() {
+				$(this).toggleClass('message_expanded');
+				$(this).children('td.message').children('div').toggleClass('hideextra');
+			});
+			
 			var alerts_num_rows = $('#alertsTable > tbody > tr').size();
 			if (alerts_num_rows > maxNumRows) {
 				$('#alertsTable > tbody:last > tr:last').remove();
@@ -43,7 +48,7 @@ var connect = function() {
 		data['facility']+'</td><td class="message"><div class="hideextra">'+
 		data['message']+'</div></td></tr>');
 		
-		$('tr.row:first').click(function() {
+		$('#messagesTable > tbody > tr.row:first').click(function() {
 			$(this).toggleClass('message_expanded');
 			$(this).children('td.message').children('div').toggleClass('hideextra');
 		});

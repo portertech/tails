@@ -51,12 +51,14 @@ div#content a:hover
 
 div#content div#tab_container
 {
-	padding: 1px;
+	padding: 4px;
 }
 
 div#content div#tab_container div.tab_text
 {
-	padding: 3px 10px;
+	padding: 6px 18px;
+	margin-left: 3px;
+	margin-right: 3px;
 	color: #666;
 	background-color: #e0e0e0;
 	font-weight: bold;
@@ -165,10 +167,15 @@ div#content table#messagesTable thead tr th.msg_col
 	width: 500px;
 }
 
-div#content table#messagesTable tbody tr.row:hover
+div#content table tbody tr.row:hover
 {
 	background-color: #f0f0f0;
 	cursor: pointer;
+}
+
+div#content table#alertsTable tbody tr td.message div
+{
+	width: 500px;
 }
 
 div#content table#messagesTable tbody tr td.message div
@@ -176,7 +183,7 @@ div#content table#messagesTable tbody tr td.message div
 	width: 500px;
 }
 
-div#content table#messagesTable tbody tr.message_expanded
+div#content table tbody tr.message_expanded
 {
 	background-color: #fde6d9;
 }
