@@ -16,7 +16,7 @@ How it works:
 
   Tails accepts syslog messages on port 514 (UDP), parses, then broadcasts them to the client using a WebSocket.
 
-  You can create filter terms, matching messages are considered to be alerts. Alerts are organized under a separate tab.
+  You can create filter terms, matching messages are considered to be alerts. Alerts are under a separate tab.
 
   Messages are non-persistent and they are automatically pruned.
 
