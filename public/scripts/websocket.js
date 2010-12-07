@@ -4,8 +4,8 @@ var alertsCount = 0;
 var tags = new Array('error', 'ssh', 'denied');
 
 var connect = function() {
-  if (window["WebSocket"]) {
-    conn = new WebSocket("ws://portertech.no.de:8000");
+  if (window['WebSocket']) {
+    conn = new WebSocket('ws://' + location.hostname + ':8000');
 	conn.onopen = function() {
 		//alert('Connected to the WebSocket!!'); // Uncomment this if you're in doubt that your browser supports WebSockets
 	};
