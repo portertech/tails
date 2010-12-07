@@ -18,16 +18,10 @@
       %tbody
   %div#alerts.logs_hidden
     %div#tags
-      %div.tag
-        error
-        %a(href: '#') x
-      %div.tag
-        ssh
-        %a(href: '#') x
-      %div.tag
-        denied
-        %a(href: '#') x
-      %div.clear
+    %div.tag_adder
+      %input(type: 'text', name: 'tag_field')
+      %a(href: '#') +
+    %div.clear
     %table#alertsTable
       %thead
         %tr

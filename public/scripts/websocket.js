@@ -1,7 +1,6 @@
 var conn;
 var maxNumRows = 200;
 var alertsCount = 0;
-var tags = new Array('error', 'ssh', 'denied');
 
 var connect = function() {
   if (window["WebSocket"]) {
@@ -13,10 +12,12 @@ var connect = function() {
 		data = JSON.parse(evt.data);
 		
 		var matchedTag = 0;
-		for (key in tags) {
-			var re = new RegExp(tags[key], 'i');
-			if (re.test(data['message'])) {
-				matchedTag = 1;
+		if (terms.length > 0) {
+			for (key in terms) {
+				var re = new RegExp(terms[key], 'i');
+				if (re.test(data['message'])) {
+					matchedTag = 1;
+				}
 			}
 		}
 		

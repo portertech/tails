@@ -96,7 +96,7 @@ div#content div#logs_container div.logs_hidden
 
 div#content div#logs_container div#tags
 {
-	
+	float: left;
 }
 
 div#content div#logs_container div#tags:first-child
@@ -128,6 +128,37 @@ div#content div#logs_container div#tags div a
 div#content div#logs_container div#tags div a:hover
 {
 	color: #fd6512;
+}
+
+div#content div#logs_container div.tag_adder
+{
+	float: right;
+}
+
+div#content div#logs_container div.tag_adder input
+{
+	border: 1px solid #fd6512;
+	height: 21px;
+	width: 150px;
+	margin-right: 7px;
+}
+
+div#content div#logs_container div.tag_adder a
+{
+	float: right;
+	padding: 3px 10px;
+	color: #666;
+	background-color: #e0e0e0;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+div#content div#logs_container div.tag_adder a:hover
+{
+	background-color: #fd6512;
+	color: #fff;
 }
 
 div#content table
