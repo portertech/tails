@@ -17,6 +17,7 @@ var connect = function() {
 				var re = new RegExp(terms[key], 'i');
 				if (re.test(data['message'])) {
 					matchedTag = 1;
+					data['message'] = data['message'].replace(terms[key], '<span style="background-color: #fd8645;">'+terms[key]+'</span>');
 				}
 			}
 		}
