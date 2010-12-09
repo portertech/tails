@@ -28,6 +28,8 @@ How it works:
 
 Next:
 
+  - Streams (custom tabs with filter terms)
+
   - Multi-tenant
 
   - Pause & resume tail (buffer incoming messages)
