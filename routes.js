@@ -6,12 +6,16 @@ var clutch = require('clutch')
 var querystring = require('querystring')
 
 var streams = nstore.new('./db/streams.db')
-var terms = nstore.new('./db/terms.db')
 
 var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
 var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
 
-function static(req, res, dir, file) {
+function tails(req, res) {
+	res.writeHead(200, {'Content-Type': 'text/html'})
+	res.end(header({ yield: application() }))
+}
+
+function serveStatic(req, res, dir, file) {
 	fs.readFile('./public/' + dir + '/' + file, function (err, data) {
 		if (err) {
 			console.log(err)
@@ -30,62 +34,31 @@ function static(req, res, dir, file) {
 	})
 }
 
-function landing(req, res) {
-	res.writeHead(200, {'Content-Type': 'text/html'})
-	res.end(header({ yield: application() }))
-}
-
-function get_streams(req, res) {
-	streams.all(function (err, results) {
-		if (err) {
-			console.log(err)
-			res.writeHead(500, 'Failed to get streams.', {'Content-Type': 'text/plain'})
-		} else {
-			res.writeHead(200, {'Content-Type': 'application/json'})
-			res.write(JSON.stringify(results))
-		}
-		res.end()
-	})
-}
-
-function save_stream(req, res) {
+function createStream(req, res) {
 	req.on('data', function(chunk) {
 		var stream = querystring.parse(chunk).stream
 		if (stream) {
-			streams.save(null, {'stream': stream}, function (err, key) {
+			streams.save(stream, {terms: []}, function (err) {
 				if (err) {
 					console.log(err)
-					res.writeHead(500, 'Failed to save stream.', {'Content-Type': 'text/plain'})
+					res.writeHead(500, 'Failed to create stream', {'Content-Type': 'text/plain'})
 				} else {
 					res.writeHead(201, {'Content-Type': 'text/plain'})
-					res.write(key)
 				}
 				res.end()
 			})
 		} else {
-			res.writeHead(400, 'Missing stream.', {'Content-Type': 'text/plain'})
+			res.writeHead(400, 'Missing stream field', {'Content-Type': 'text/plain'})
 			res.end()
 		}
 	})
 }
 
-function remove_stream(req, res, key) {
-	streams.remove(key, function (err) {
+function getStreams(req, res) {
+	streams.all(function (err, results) {
 		if (err) {
 			console.log(err)
-			res.writeHead(500, 'Failed to remove stream.', {'Content-Type': 'text/plain'})
-		} else {
-			res.writeHead(204)
-		}
-		res.end()
-	})
-}
-
-function get_terms(req, res) {
-	terms.all(function (err, results) {
-		if (err) {
-			console.log(err)
-			res.writeHead(500, 'Failed to get terms.', {'Content-Type': 'text/plain'})
+			res.writeHead(500, 'Failed to get streams', {'Content-Type': 'text/plain'})
 		} else {
 			res.writeHead(200, {'Content-Type': 'application/json'})
 			res.write(JSON.stringify(results))
@@ -94,33 +67,11 @@ function get_terms(req, res) {
 	})
 }
 
-function save_term(req, res) {
-	req.on('data', function(chunk) {
-		var term = querystring.parse(chunk).term
-		var stream = querystring.parse(chunk).stream || 'alerts'
-		if (term) {
-			terms.save(null, {'term': term, 'stream': stream}, function (err, key) {
-				if (err) {
-					console.log(err)
-					res.writeHead(500, 'Failed to save term.', {'Content-Type': 'text/plain'})
-				} else {
-					res.writeHead(201, {'Content-Type': 'text/plain'})
-					res.write(key)
-				}
-				res.end()
-			})
-		} else {
-			res.writeHead(400, 'Missing term.', {'Content-Type': 'text/plain'})
-			res.end()
-		}
-	})
-}
-
-function remove_term(req, res, key) {
-	terms.remove(key, function (err) {
+function removeStream(req, res, stream) {
+	streams.remove(stream, function (err) {
 		if (err) {
 			console.log(err)
-			res.writeHead(500, 'Failed to remove term.', {'Content-Type': 'text/plain'})
+			res.writeHead(500, 'Failed to remove stream', {'Content-Type': 'text/plain'})
 		} else {
 			res.writeHead(204)
 		}
@@ -128,11 +79,67 @@ function remove_term(req, res, key) {
 	})
 }
 
-exports.urls = clutch.route404([['GET /$', landing],
-				['GET /streams$', get_streams],
-				['POST /streams$', save_stream],
-				['DELETE /streams/(.*)$', remove_stream],
-				['GET /terms$', get_terms],
-				['POST /terms$', save_term],
-				['DELETE /terms/(.*)$', remove_term],
-				['GET /(.*)/(.*)$', static]])
+function createTerm(req, res, stream) {
+	req.on('data', function(chunk) {
+		var term = querystring.parse(chunk).term
+		if (term) {
+			streams.get(stream, function (err, doc) {
+				if (err) {
+					console.log(err)
+					res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
+					res.end()
+				} else {
+					terms = doc.terms
+					terms.push(term)
+					streams.save(stream, {'terms': terms}, function (err) {
+						if (err) {
+							console.log(err)
+							res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
+						} else {
+							res.writeHead(201, {'Content-Type': 'text/plain'})
+						}
+						res.end()
+					})
+				}
+			})
+		} else {
+			res.writeHead(400, 'Missing term field', {'Content-Type': 'text/plain'})
+			res.end()
+		}
+	})
+}
+
+function removeTerm(req, res, stream, term) {
+	streams.get(stream, function (err, doc) {
+		if (err) {
+			console.log(err)
+			res.writeHead(500, 'Failed to remove term', {'Content-Type': 'text/plain'})
+			res.end()
+		} else {
+			terms = doc.terms
+			for (var i=0; i<terms.length; i++) {
+				if (terms[i] == term) {
+					terms.splice(i, 1)
+					break
+				}
+			}
+			streams.save(stream, {'terms': terms}, function (err) {
+				if (err) {
+					console.log(err)
+					res.writeHead(500, 'Failed to remove term', {'Content-Type': 'text/plain'})
+				} else {
+					res.writeHead(204)
+				}
+				res.end()
+			})
+		}
+	})
+}
+
+exports.urls = clutch.route404([['GET /$', tails],
+				['POST /streams$', createStream],
+				['POST /streams/(.*)/terms$', createTerm],
+				['GET /streams$', getStreams],
+				['DELETE /streams/(.*)/terms/(.*)$', removeTerm],
+				['DELETE /streams/(.*)$', removeStream],
+				['GET /(.*)/(.*)$', serveStatic]])
