@@ -34,11 +34,9 @@ function addTerm() {
 			$('div#tags').append('<div id="'+data+'" class="tag" style="display: none;">'+new_tag_val+' <a href="#">x</a>');
 			$('div#'+data).fadeIn('normal');
 			addedTerm();
-			$.jGrowl('The term "'+new_tag_val+'" was added successfully!');
 		}});
 	} else {
 		$('div.tag_adder > input').val('');
-		$.jGrowl('The term "'+new_tag_val+'" already exists!');
 	}
 }
 
