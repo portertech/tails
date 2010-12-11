@@ -36,9 +36,9 @@ function serveStatic(req, res, dir, file) {
 
 function createStream(req, res) {
 	req.on('data', function(chunk) {
-		var stream = querystring.parse(chunk).stream
-		if (stream) {
-			streams.save(stream, {terms: []}, function (err) {
+		var name = querystring.parse(chunk).name
+		if (name) {
+			streams.save(escape(name), {name: name, terms: []}, function (err) {
 				if (err) {
 					console.log(err)
 					res.writeHead(500, 'Failed to create stream', {'Content-Type': 'text/plain'})
@@ -48,7 +48,7 @@ function createStream(req, res) {
 				res.end()
 			})
 		} else {
-			res.writeHead(400, 'Missing stream field', {'Content-Type': 'text/plain'})
+			res.writeHead(400, 'Missing name field', {'Content-Type': 'text/plain'})
 			res.end()
 		}
 	})
@@ -89,9 +89,9 @@ function createTerm(req, res, stream) {
 					res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
 					res.end()
 				} else {
-					terms = doc.terms
+					var terms = doc.terms
 					terms.push(term)
-					streams.save(stream, {'terms': terms}, function (err) {
+					streams.save(stream, {name: doc.name, terms: terms}, function (err) {
 						if (err) {
 							console.log(err)
 							res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
@@ -116,14 +116,14 @@ function removeTerm(req, res, stream, term) {
 			res.writeHead(500, 'Failed to remove term', {'Content-Type': 'text/plain'})
 			res.end()
 		} else {
-			terms = doc.terms
+			var terms = doc.terms
 			for (var i=0; i<terms.length; i++) {
 				if (terms[i] == term) {
 					terms.splice(i, 1)
 					break
 				}
 			}
-			streams.save(stream, {'terms': terms}, function (err) {
+			streams.save(stream, {name: doc.name, terms: terms}, function (err) {
 				if (err) {
 					console.log(err)
 					res.writeHead(500, 'Failed to remove term', {'Content-Type': 'text/plain'})

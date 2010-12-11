@@ -37,9 +37,9 @@ Next:
   - Export paused tail to csv
 
 
-curl -id 'stream=foo' localhost/streams
-curl -i localhost/streams --> {"foo":{"terms":[]}
+curl -id 'name=foo' localhost/streams
+curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
 curl -id 'term=bar' localhost/streams/foo/terms
-curl -i localhost/streams --> {"foo":{"terms":["bar"]}}
+curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
 curl -iX DELETE localhost/streams/foo/terms/bar
 curl -iX DELETE localhost/streams/foo
