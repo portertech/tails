@@ -38,12 +38,14 @@ function createStream(req, res) {
 	req.on('data', function(chunk) {
 		var name = querystring.parse(chunk).name
 		if (name) {
-			streams.save(escape(name), {name: name, terms: []}, function (err) {
+			var key = escape(name)
+			streams.save(key, {name: name, terms: []}, function (err) {
 				if (err) {
 					console.log(err)
 					res.writeHead(500, 'Failed to create stream', {'Content-Type': 'text/plain'})
 				} else {
 					res.writeHead(201, {'Content-Type': 'text/plain'})
+					res.write(key)
 				}
 				res.end()
 			})
