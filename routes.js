@@ -39,15 +39,22 @@ function createStream(req, res) {
 		var name = querystring.parse(chunk).name
 		if (name) {
 			var key = name.replace(/[^A-Za-z0-9]/g, "")
-			streams.save(key, {name: name, terms: []}, function (err) {
+			streams.get(key, function (err) {
 				if (err) {
-					console.log(err)
-					res.writeHead(500, 'Failed to create stream', {'Content-Type': 'text/plain'})
+					streams.save(key, {name: name, terms: []}, function (err) {
+						if (err) {
+							console.log(err)
+							res.writeHead(500, 'Failed to create stream', {'Content-Type': 'text/plain'})
+						} else {
+							res.writeHead(201, {'Content-Type': 'text/plain'})
+							res.write(key)
+						}
+						res.end()
+					})
 				} else {
-					res.writeHead(201, {'Content-Type': 'text/plain'})
-					res.write(key)
+					res.writeHead(409, 'Stream already exists', {'Content-Type': 'text/plain'})
+					res.end()
 				}
-				res.end()
 			})
 		} else {
 			res.writeHead(400, 'Missing name field', {'Content-Type': 'text/plain'})
