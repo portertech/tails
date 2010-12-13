@@ -1,12 +1,17 @@
-%div#tab_container
-  %div#all_text.tab_text.tab_selected
-    All
-  %div#alerts_text.tab_text
-    Alerts (
-    %span#alertsnum 0
-    )
+%ul.tabs
+  %li#all
+    %a.selected#all_tab All
+  %li#alerts
+    %a#alerts_tab Alerts
+      (
+      %span#alerts_num 0
+      )
+  %div#streams
+  %li
+    %a#add_tab{ rel: '#new_stream_modal' } +
+%div.clear
 %div#logs_container
-  %div#all
+  %div#all_logs
     %table#messagesTable
       %thead
         %tr
@@ -16,13 +21,13 @@
           %th.fac_col Facility
           %th.msg_col Message
       %tbody
-  %div#alerts.logs_hidden
-    %div#tags
-    %div.tag_adder
-      %input(type: 'text', name: 'tag_field')
+  %div#alerts_logs.logs_hidden
+    %div.terms
+    %div.term_adder
+      %input(type: 'text', name: 'term_field')
       %a(href: '#') +
     %div.clear
-    %table#alertsTable
+    %table
       %thead
         %tr
           %th.dat_col Date
@@ -31,3 +36,10 @@
           %th.fac_col Facility
           %th.msg_col Message
       %tbody
+%div.apple_overlay.black#new_stream_modal
+  %div#new_stream_form
+    %div.error
+    %h1 New Stream
+    %label{ for: 'stream_name' } Stream name: 
+    %input{ type: 'text', id: 'stream_name' }
+    %input{ type: 'button', value: 'Create', id: 'create_stream' }

@@ -71,36 +71,6 @@ div#content a:hover
 	color: #28bf44;
 }
 
-div#content div#tab_container
-{
-	padding: 4px;
-}
-
-div#content div#tab_container div.tab_text
-{
-	padding: 6px 18px;
-	margin-left: 3px;
-	margin-right: 3px;
-	color: #666;
-	background-color: #e0e0e0;
-	font-weight: bold;
-	font-size: 12px;
-	display: inline;
-	-webkit-border-top-left-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-	-moz-border-radius-topright: 6px;
-	border-top-left-radius: 6px;
-	border-top-right-radius: 6px;
-	cursor: pointer;
-}
-
-div#content div#tab_container div.tab_selected
-{
-	color: #fff;
-	background-color: #fd6512;
-}
-
 div#content div#logs_container
 {
 	border: 1px solid #fd6512;
@@ -116,17 +86,17 @@ div#content div#logs_container div.logs_hidden
 	display: none;
 }
 
-div#content div#logs_container div#tags
+div#content div#logs_container div.terms
 {
 	float: left;
 }
 
-div#content div#logs_container div#tags:first-child
+div#content div#logs_container div.terms:first-child
 {
 	margin-left: 0;
 }
 
-div#content div#logs_container div#tags div.tag
+div#content div#logs_container div.terms div.term
 {
 	float: left;
 	margin-left: 3px;
@@ -140,24 +110,24 @@ div#content div#logs_container div#tags div.tag
 	border-radius: 6px;
 }
 
-div#content div#logs_container div#tags div a
+div#content div#logs_container div.terms div a
 {
 	margin-left: 6px;
 	color: #333;
 	cursor: pointer;
 }
 
-div#content div#logs_container div#tags div a:hover
+div#content div#logs_container div.terms div a:hover
 {
 	color: #fd6512;
 }
 
-div#content div#logs_container div.tag_adder
+div#content div#logs_container div.term_adder
 {
 	float: right;
 }
 
-div#content div#logs_container div.tag_adder input
+div#content div#logs_container div.term_adder input
 {
 	border: 1px solid #fd6512;
 	height: 21px;
@@ -165,7 +135,7 @@ div#content div#logs_container div.tag_adder input
 	margin-right: 7px;
 }
 
-div#content div#logs_container div.tag_adder a
+div#content div#logs_container div.term_adder a
 {
 	float: right;
 	padding: 3px 10px;
@@ -177,7 +147,7 @@ div#content div#logs_container div.tag_adder a
 	cursor: pointer;
 }
 
-div#content div#logs_container div.tag_adder a:hover
+div#content div#logs_container div.term_adder a:hover
 {
 	background-color: #fd6512;
 	color: #fff;
@@ -190,32 +160,22 @@ div#content table
 	border-collapse: collapse;
 }
 
-div#content table#alertsTable
+div#content table
 {
 	margin-top: 20px;
 }
 
 div#content table#messagesTable
 {
-	
+	margin-top: 0;
 }
 
-div#content table#alertsTable thead tr th.dat_col
+div#content table thead tr th.dat_col
 {
 	width: 110px;
 }
 
-div#content table#messagesTable thead tr th.dat_col
-{
-	width: 110px;
-}
-
-div#content table#alertsTable thead tr th.msg_col
-{
-	width: 500px;
-}
-
-div#content table#messagesTable thead tr th.msg_col
+div#content table thead tr th.msg_col
 {
 	width: 500px;
 }
@@ -226,12 +186,7 @@ div#content table tbody tr.row:hover
 	cursor: pointer;
 }
 
-div#content table#alertsTable tbody tr td.message div
-{
-	width: 500px;
-}
-
-div#content table#messagesTable tbody tr td.message div
+div#content table tbody tr td.message div
 {
 	width: 500px;
 }
@@ -239,6 +194,45 @@ div#content table#messagesTable tbody tr td.message div
 div#content table tbody tr.message_expanded
 {
 	background-color: #fde6d9;
+}
+
+div#new_stream_form
+{
+	margin: 0 auto;
+	text-align: center;
+	padding: 28px;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+div#new_stream_form h1
+{
+	font-size: 1.6em;
+}
+
+div#new_stream_form label
+{
+	color: #ccc;
+	font-weight: bold;
+	margin-right: 7px;
+	font-size: 1.0em;
+}
+
+div#new_stream_form input[type="button"]
+{
+	margin-left: 28px;
+}
+
+div.error
+{
+	background-color: #fee;
+	border: 1px solid #f00;
+	color: #f00;
+	font-weight: bold;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	display: none;
+	margin-bottom: 7px;
 }
 
 .hideextra
@@ -254,7 +248,12 @@ div#content table tbody tr.message_expanded
 	overflow: visible;
 }
 
-div.clear
+.hidden
+{
+	display: none;
+}
+
+.clear
 {
 	clear: both;
 }

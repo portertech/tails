@@ -50,7 +50,7 @@ var connect = function() {
 		data['facility']+'</td><td class="message"><div class="hideextra">'+
 		data['message']+'</div></td></tr>');
 		
-		$('#messagesTable > tbody > tr.row:first').click(function() {
+		$('div#logs_container > tbody > tr.row:first').click(function() {
 			$(this).toggleClass('message_expanded');
 			$(this).children('td.message').children('div').toggleClass('hideextra');
 		});
