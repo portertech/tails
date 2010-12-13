@@ -38,7 +38,7 @@ function createStream(req, res) {
 	req.on('data', function(chunk) {
 		var name = querystring.parse(chunk).name
 		if (name) {
-			var key = escape(name)
+			var key = name.replace(/[^A-Za-z0-9]/g, "")
 			streams.save(key, {name: name, terms: []}, function (err) {
 				if (err) {
 					console.log(err)
