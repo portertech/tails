@@ -3,7 +3,7 @@ function Stream()
 	// Properties
 	this.s_id = null;
 	this.s_name = null;
-	this.s_terms = null;
+	this.s_terms = new Array();
 	
 	// Getter Methods
 	this.getId = function() { return s_id; };
@@ -14,32 +14,87 @@ function Stream()
 	this.setId = function(id) { s_id = id; };
 	this.setName = function(name) { s_name = name; };
 	this.setTerms = function(terms) { s_terms = terms; };
+	
+	// Other Methods
+	this.addTerm = function(term) { s_terms.push(term); }
 }
+
 
 var streams = new Array();
 var inAnimation = false;
 
-function switchToStream(stream) {
-	var selected_tab = $('ul.tabs').find('.selected');
-	if (inAnimation == false) {
-		inAnimation = true;
-		selected_tab.removeClass('selected', 'normal');
-		stream.addClass('selected', 'normal');
-		$("div#logs_container").children("div:not(.logs_hidden)").fadeOut('normal', function() {
-			$(this).addClass('logs_hidden', 'normal');
-			$("div#logs_container > div#"+stream.parent().attr('id')+"_logs").fadeIn('normal', function() {
-				$(this).removeClass('logs_hidden', 'normal');
-			});
-		});
-		inAnimation = false;
-	}
+function displayTerm(element, term) {
+	element.append('<div id="'+term+'" class="term">'+term+' <a href="#">x</a></div>');
+	
+	/* Term deletion */
+ 	element.find('div#'+term+' > a').click(function() {
+		var term_name = $(this).parent().attr('id');
+		$.ajax({ url: '/streams/'+getCurrentStreamId()+'/terms/'+term_name, type: 'DELETE', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
+			if (XMLHttpRequest.status == '204') {
+				// Deleted
+				$('div#logs_container > div:not(.logs_hidden) > div.terms > div#'+term_name).fadeOut('normal', function() {
+					$(this).remove();
+				});
+			} else {
+				// Something seriously went wrong
+			}
+		}});
+	});
 }
 
-function tabClick() {
+function addTerm(element, term) {
+	$.ajax({ url: '/streams/'+getCurrentStreamId()+'/terms',  data: { term: term }, type: 'POST', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
+		if (XMLHttpRequest.status == '201') {
+			// Created
+			streams[getCurrentStreamId()].addTerm(term);
+			displayTerm(element, term);
+			element.parent().find('input').val('');
+		} else {
+			// Something seriously went wrong
+		}
+	}});
+}
+
+function getCurrentStreamId() {
+	return $('ul.tabs').find('.selected').parent().attr('id');
+}
+
+function switchToStream(stream) {
+	var selected_tab = $('ul.tabs').find('.selected');
+	selected_tab.removeClass('selected', 'normal');
+	stream.addClass('selected', 'normal');
+	$("div#logs_container").children("div:not(.logs_hidden)").fadeOut('normal', function() {
+		$(this).addClass('logs_hidden', 'normal');
+		$("div#logs_container > div#"+stream.parent().attr('id')+"_logs").fadeIn('normal', function() {
+			$(this).removeClass('logs_hidden', 'normal');
+			inAnimation = false;
+		});
+	});
+}
+
+function setupTabs() {
 	/* Tab switching */
 	$('ul.tabs > div#streams > li:last > a').click(function() {
-		var stream = $(this);
-		switchToStream(stream);
+		if ((!$(this).hasClass('selected')) && (inAnimation == false)) {
+			inAnimation = true;
+			var stream = $(this);
+			switchToStream(stream);
+		}
+	});
+	
+	/* Term creation */
+	$('div#logs_container > div:last > div.term_adder > input').keyup(function(e) {
+		var new_term_val = $(this).val();
+		var terms_container = $('div#logs_container > div:not(.logs_hidden) > div.terms');
+		if((e.keyCode == 13) && (new_term_val != '')) {
+			addTerm(terms_container, new_term_val);
+		}
+	});
+	
+	$('div#logs_container > div:last > div.term_adder > a').click(function() {
+		var new_term_val = $(this).parent().children('input').val();
+		var terms_container = $('div#logs_container > div:not(.logs_hidden) > div.terms');
+		addTerm(terms_container, new_term_val);
 	});
 }
 
@@ -58,7 +113,11 @@ function addStream(s) {
 		'<th class="msg_col">Message</th>'+
 		'</tr></thead>'+
 		'<tbody></tbody></table>');
-	tabClick();
+	var terms_container = $('div#logs_container > div:last > div.terms');
+	for (var t in s.getTerms()) {
+		displayTerm(terms_container, s.getTerms()[t]);
+	}
+	setupTabs();
 }
 
 function getStreams() {
@@ -68,6 +127,8 @@ function getStreams() {
 			var stream = new Stream();
 			stream.setId(key);
 			stream.setName(data[key].name);
+			stream.setTerms(data[key].terms);
+			streams[key] = stream;
 			addStream(stream);
 		}
 	}});
@@ -121,48 +182,12 @@ $(document).ready(function() {
 	
 	/* Handle tab clicks for all / alerts */
 	$('ul.tabs > li > a').click(function() {
-		var stream = $(this);
-		if (stream.attr('id') != 'add_tab') {
-			switchToStream(stream);
+		if((!$(this).hasClass('selected')) && (inAnimation == false)) {
+			var stream = $(this);
+			if (stream.attr('id') != 'add_tab') {
+				inAnimation = true;
+				switchToStream(stream);
+			}
 		}
 	});
-	
-	/* All logs and alerts */
-	/*$('div#alerts_text').click(function() {
-		if ((!$(this).hasClass('tab_selected')) && inAnimation == false) {
-			inAnimation = true;
-			$('div#all_text').removeClass('tab_selected', 'normal');
-			$('div#all').fadeOut('normal', function() {
-				$('div#alerts_text').addClass('tab_selected', 'normal');
-				$('div#alerts').fadeIn('normal', function() {
-					inAnimation = false;
-				});
-			});
-		}
-	});
-	$('div#all_text').click(function() {
-		if ((!$(this).hasClass('tab_selected')) && inAnimation == false) {
-			inAnimation = true;
-			$('div#alerts_text').removeClass('tab_selected', 'normal');
-			$('div#alerts').fadeOut('normal', function() {
-				$('div#all_text').addClass('tab_selected', 'normal');
-				$('div#all').fadeIn('normal', function() {
-					inAnimation = false;
-				});
-			});
-		}
-	});
-	
-	getTerms();
-	
-	$('div.tag_adder > input').keyup(function(e) {
-		var new_tag_val = $('div.tag_adder > input').val();
-		if((e.keyCode == 13) && (new_tag_val != '')) {
-			addTerm();
-		}
-	});
-	
-	$('div.tag_adder > a').click(function() {
-		addTerm();
-	});*/
 });

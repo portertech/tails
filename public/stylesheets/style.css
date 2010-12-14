@@ -89,6 +89,7 @@ div#content div#logs_container div.logs_hidden
 div#content div#logs_container div.terms
 {
 	float: left;
+	max-width: 700px;
 }
 
 div#content div#logs_container div.terms:first-child
@@ -101,6 +102,7 @@ div#content div#logs_container div.terms div.term
 	float: left;
 	margin-left: 3px;
 	margin-right: 3px;
+	margin-bottom: 6px;
 	padding: 3px 10px;
 	color: #666;
 	font-weight: bold;
