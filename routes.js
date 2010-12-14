@@ -35,8 +35,12 @@ function serveStatic(req, res, dir, file) {
 }
 
 function createStream(req, res) {
+	var requestString = ""
 	req.on('data', function(chunk) {
-		var name = querystring.parse(chunk).name
+		requestString += chunk
+	})
+	req.on('end' , function() {
+		var name = querystring.parse(requestString).name
 		if (name) {
 			var key = name.replace(/[^A-Za-z0-9]/g, "")
 			streams.get(key, function (err) {
@@ -89,8 +93,12 @@ function removeStream(req, res, stream) {
 }
 
 function createTerm(req, res, stream) {
+	var requestString = ""
 	req.on('data', function(chunk) {
-		var term = querystring.parse(chunk).term
+		requestString += chunk
+	})
+	req.on('end', function() {
+		var term = querystring.parse(requestString).term
 		if (term) {
 			streams.get(stream, function (err, doc) {
 				if (err) {
