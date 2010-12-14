@@ -99,16 +99,21 @@ function createTerm(req, res, stream) {
 					res.end()
 				} else {
 					var terms = doc.terms
-					terms.push(term)
-					streams.save(stream, {name: doc.name, terms: terms}, function (err) {
-						if (err) {
-							console.log(err)
-							res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
-						} else {
-							res.writeHead(201, {'Content-Type': 'text/plain'})
-						}
+					if (terms.indexOf(term) == -1) {
+						terms.push(term)
+						streams.save(stream, {name: doc.name, terms: terms}, function (err) {
+							if (err) {
+								console.log(err)
+								res.writeHead(500, 'Failed to create term', {'Content-Type': 'text/plain'})
+							} else {
+								res.writeHead(201, {'Content-Type': 'text/plain'})
+							}
+							res.end()
+						})
+					} else {
+						res.writeHead(409, 'Term already exists', {'Content-Type': 'text/plain'})
 						res.end()
-					})
+					}
 				}
 			})
 		} else {
