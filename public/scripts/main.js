@@ -46,7 +46,7 @@ function addTerm(element, term) {
 	$.ajax({ url: '/streams/'+getCurrentStreamId()+'/terms',  data: { term: term }, type: 'POST', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 		if (XMLHttpRequest.status == '201') {
 			// Created
-			streams[getCurrentStreamId()].addTerm(term);
+			streams[getCurrentStreamId()].Terms.push(term);
 			displayTerm(element, term);
 			element.parent().find('input').val('');
 		} else {
@@ -93,9 +93,9 @@ function setupTabs() {
 }
 
 function addStream(s) {
-	$('div#streams').append('<li id="'+s.getId()+'"><a href="#">'+s.getName()+'</a></li>');
+	$('div#streams').append('<li id="'+s.ID+'"><a href="#">'+s.Name+'</a></li>');
 	$('div#streams li:last').fadeIn('normal');
-	$('div#logs_container').append('<div id="'+s.getId()+'_logs" class="logs_hidden">'+
+	$('div#logs_container').append('<div id="'+s.ID+'_logs" class="logs_hidden">'+
 		'<div class="terms"></div>'+
 		'<div class="term_adder"><input type="text" name="term_field"/><a href="#">+</a></div>'+
 		'<div class="clear"></div>'+
@@ -108,8 +108,8 @@ function addStream(s) {
 		'</tr></thead>'+
 		'<tbody></tbody></table>');
 	var terms_container = $('div#logs_container > div:last > div.terms');
-	for (var t in s.getTerms()) {
-		displayTerm(terms_container, s.getTerms()[t]);
+	for (var t in s.Terms) {
+		displayTerm(terms_container, s.Terms[t]);
 	}
 	setupTabs();
 }
@@ -118,12 +118,19 @@ function getStreams() {
 	$.ajax({ url: '/streams', type: 'GET', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 		// success
 		for (var key in data) {
-			var stream = new Stream();
+			/*var stream = new Stream();
 			stream.setId(key);
 			stream.setName(data[key].name);
 			stream.setTerms(data[key].terms);
 			streams.push(stream);
-			addStream(stream);
+			addStream(stream);*/
+			var stream = {
+				'ID': key,
+				'Name': data[key].name,
+				'Terms': data[key].terms,
+			}
+			streams[key] = stream
+			addStream(stream)
 		}
 	}});
 }

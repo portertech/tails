@@ -12,7 +12,8 @@ var connect = function() {
 		data = JSON.parse(evt.data);
 		
 		for (var stream in streams) {
-			alert(streams[stream].getName());
+			alert(stream);
+			alert(JSON.stringify(streams[stream]));
 		}
 		
 		/*var matchedTag = 0;
