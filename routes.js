@@ -5,7 +5,17 @@ var haml = require('haml')
 var clutch = require('clutch')
 var querystring = require('querystring')
 
-var streams = nstore.new('./db/streams.db')
+var streams = nstore.new('./db/streams.db', function () { 
+	streams.get('alerts', function (err) { 
+		if (err) {
+			streams.save('alerts', {name: 'alerts', terms: []}, function (err) { 
+				if (err) {
+					console.log(err)
+				}
+			})
+		}
+	})
+})
 
 var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
 var application = haml(fs.readFileSync('views/layouts/application.haml', 'utf8'))
