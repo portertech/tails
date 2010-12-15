@@ -122,7 +122,7 @@ function getStreams() {
 			stream.setId(key);
 			stream.setName(data[key].name);
 			stream.setTerms(data[key].terms);
-			streams[key] = stream;
+			streams.push(stream);
 			addStream(stream);
 		}
 	}});

@@ -11,7 +11,11 @@ var connect = function() {
 	conn.onmessage = function(evt) {
 		data = JSON.parse(evt.data);
 		
-		var matchedTag = 0;
+		for (var stream in streams) {
+			alert(streams[stream].getName());
+		}
+		
+		/*var matchedTag = 0;
 		if (terms.length > 0) {
 			for (key in terms) {
 				var re = new RegExp(terms[key], 'i');
@@ -57,7 +61,7 @@ var connect = function() {
 		var num_rows = $('#messagesTable > tbody > tr').size();
 		if (num_rows > maxNumRows) {
 			$('#messagesTable > tbody:last > tr:last').remove();
-		}
+		}*/
 	};
   }
 };
