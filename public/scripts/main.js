@@ -61,22 +61,16 @@ function getCurrentStreamId() {
 
 function switchToStream(stream) {
 	var selected_tab = $('ul.tabs').find('.selected');
-	selected_tab.removeClass('selected', 'normal');
-	stream.addClass('selected', 'normal');
-	$("div#logs_container").children("div:not(.logs_hidden)").fadeOut('normal', function() {
-		$(this).addClass('logs_hidden', 'normal');
-		$("div#logs_container > div#"+stream.parent().attr('id')+"_logs").fadeIn('normal', function() {
-			$(this).removeClass('logs_hidden', 'normal');
-			inAnimation = false;
-		});
-	});
+	selected_tab.removeClass('selected');
+	stream.addClass('selected');
+	$("div#logs_container").children("div:not(.logs_hidden)").addClass('logs_hidden');
+	$("div#logs_container > div#"+stream.parent().attr('id')+"_logs").removeClass('logs_hidden');
 }
 
 function setupTabs() {
 	/* Tab switching */
 	$('ul.tabs > div#streams > li:last > a').click(function() {
 		if ((!$(this).hasClass('selected')) && (inAnimation == false)) {
-			inAnimation = true;
 			var stream = $(this);
 			switchToStream(stream);
 		}
@@ -185,7 +179,6 @@ $(document).ready(function() {
 		if((!$(this).hasClass('selected')) && (inAnimation == false)) {
 			var stream = $(this);
 			if (stream.attr('id') != 'add_tab') {
-				inAnimation = true;
 				switchToStream(stream);
 			}
 		}
