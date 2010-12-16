@@ -38,6 +38,15 @@ div#content ul.tabs li a {
 	-moz-border-radius-topright: 6px;
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
+	float: left;
+}
+
+div#content ul.tabs div#streams li.alerts a {
+	padding: 0 20px;
+}
+
+div#content ul.tabs div#streams li a {
+	padding: 0 26px 0 20px;
 }
 
 div#content ul.tabs li a.selected {

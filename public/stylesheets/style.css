@@ -198,6 +198,19 @@ div#content table tbody tr.message_expanded
 	background-color: #fde6d9;
 }
 
+div.stream_delete {
+	width: 10px;
+	color: #333;
+	float: left;
+	margin-left: -18px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.stream_delete:hover {
+	color: #666;
+}
+
 div#new_stream_form
 {
 	margin: 0 auto;

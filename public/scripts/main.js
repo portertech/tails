@@ -76,6 +76,15 @@ function setupTabs() {
 		}
 	});
 	
+	/* Tab deletion */
+	$('ul.tabs > div#streams > li:last > div.stream_delete').click(function() {
+		var list_element = $(this).parent();
+		$.ajax({ url: '/streams/'+list_element.attr('id'), type: 'DELETE', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
+			// Deleted
+			list_element.remove();
+		}});
+	});
+	
 	/* Term creation */
 	$('div#logs_container > div:last > div.term_adder > input').keyup(function(e) {
 		var new_term_val = $(this).val();
@@ -93,7 +102,12 @@ function setupTabs() {
 }
 
 function addStream(s) {
-	$('div#streams').append('<li id="'+s.ID+'"><a href="#">'+s.Name+'</a></li>');
+	if (s.ID == 'alerts') {
+		$('div#streams').append('<li id="'+s.ID+'" class="alerts"><a href="#">'+s.Name+'(<span id="alertsnum">0</span>)</a></li>');
+	} else {
+		$('div#streams').append('<li id="'+s.ID+'"><a href="#">'+s.Name+'</a><div class="stream_delete">x</div></li>');
+	}
+	
 	$('div#streams li:last').fadeIn('normal');
 	$('div#logs_container').append('<div id="'+s.ID+'_logs" class="logs_hidden">'+
 		'<div class="terms"></div>'+
@@ -118,19 +132,13 @@ function getStreams() {
 	$.ajax({ url: '/streams', type: 'GET', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 		// success
 		for (var key in data) {
-			/*var stream = new Stream();
-			stream.setId(key);
-			stream.setName(data[key].name);
-			stream.setTerms(data[key].terms);
-			streams.push(stream);
-			addStream(stream);*/
 			var stream = {
 				'ID': key,
 				'Name': data[key].name,
 				'Terms': data[key].terms,
 			}
-			streams[key] = stream
-			addStream(stream)
+			streams[key] = stream;
+			addStream(stream);
 		}
 	}});
 }
@@ -160,9 +168,12 @@ $(document).ready(function() {
 			$.ajax({ url: '/streams', type: 'POST', data: { name: stream_name }, timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 				if (XMLHttpRequest.status == '201') {
 					// Created
-					var stream = new Stream();
-					stream.setId(data);
-					stream.setName(stream_name);
+					var stream = {
+						'ID': data,
+						'Name': stream_name,
+						'Terms': new Array(),
+					}
+					streams[stream.ID] = stream;
 					addStream(stream);
 					$("#add_tab[rel]").overlay().close();
 				} else {

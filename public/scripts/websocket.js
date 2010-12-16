@@ -12,57 +12,60 @@ var connect = function() {
 		data = JSON.parse(evt.data);
 		
 		for (var stream in streams) {
-			alert(stream);
-			alert(JSON.stringify(streams[stream]));
-		}
-		
-		/*var matchedTag = 0;
-		if (terms.length > 0) {
-			for (key in terms) {
-				var re = new RegExp(terms[key], 'i');
-				if (re.test(data['message'])) {
-					matchedTag = 1;
-					var alerts_message = data['message'].replace(terms[key], '<span style="background-color: #fd8645;">'+terms[key]+'</span>');
+			if (streams[stream].Terms.length > 0) {
+				var matchedTerms = 0;
+				var message = data['message'];
+				
+				for (var term in streams[stream].Terms) {
+					var re = new RegExp(streams[stream].Terms[term], 'i');
+					if (re.test(data['message'])) {
+						message = message.replace(streams[stream].Terms[term], '<span style="background-color: #fd8645;">'+
+							streams[stream].Terms[term]+'</span>');
+						matchedTerms++;
+					}
+				}
+				
+				if (matchedTerms > 0) {
+					$('#alertsnum').html(++alertsCount);
+					
+					var num_rows = $('#div#logs_container > div#'+stream+'_logs > table > tbody:last > tr:last').size();
+					if (num_rows > maxNumRows) {
+						$('#div#logs_container > div#'+stream+'_logs > table > tbody:last > tr:last').remove();
+					}
+					
+					$('div#logs_container > div#'+stream+'_logs > table > tbody:last').prepend('<tr class="row"><td>'+
+						data['date']+'</td><td>'+
+						data['host']+'</td><td>'+
+						data['severity']+'</td><td>'+
+						data['facility']+'</td><td class="message"><div class="hideextra">'+
+						message+'</div></td></tr>');
+					
+					$('div#logs_container > div#'+stream+'_logs > table > tbody:last > tr.row:first').click(function() {
+						$(this).toggleClass('message_expanded');
+						$(this).children('td.message').children('div').toggleClass('hideextra');
+					});
 				}
 			}
 		}
 		
-		if (matchedTag == 1) {
-			$('#alertsnum').html(++alertsCount);
-			
-			$('#alertsTable > tbody:last').prepend('<tr class="row"><td>'+
+		/* Remove the last line if there are more than maxNumRows */
+		var num_rows = $('#div#logs_container > div#all_logs > table > tbody:last > tr:last').size();
+		if (num_rows > maxNumRows) {
+			$('#div#logs_container > div#all_logs > table > tbody:last > tr:last').remove();
+		}
+		
+		/* Show all logs in the main div */
+		$('div#logs_container > div#all_logs > table > tbody:last').prepend('<tr class="row"><td>'+
 			data['date']+'</td><td>'+
 			data['host']+'</td><td>'+
 			data['severity']+'</td><td>'+
 			data['facility']+'</td><td class="message"><div class="hideextra">'+
-			alerts_message+'</div></td></tr>');
-			
-			$('#alertsTable > tbody > tr.row:first').click(function() {
-				$(this).toggleClass('message_expanded');
-				$(this).children('td.message').children('div').toggleClass('hideextra');
-			});
-			
-			var alerts_num_rows = $('#alertsTable > tbody > tr').size();
-			if (alerts_num_rows > maxNumRows) {
-				$('#alertsTable > tbody:last > tr:last').remove();
-			}
-		}
+			message+'</div></td></tr>');
 		
-		$('#messagesTable > tbody:last').prepend('<tr class="row"><td>'+
-		data['date']+'</td><td>'+
-		data['host']+'</td><td>'+
-		data['severity']+'</td><td>'+
-		data['facility']+'</td><td class="message"><div class="hideextra">'+
-		data['message']+'</div></td></tr>');
-		
-		$('div#logs_container > tbody > tr.row:first').click(function() {
+		$('div#logs_container > div#all_logs > table > tbody:last > tr.row:first').click(function() {
 			$(this).toggleClass('message_expanded');
 			$(this).children('td.message').children('div').toggleClass('hideextra');
 		});
-		var num_rows = $('#messagesTable > tbody > tr').size();
-		if (num_rows > maxNumRows) {
-			$('#messagesTable > tbody:last > tr:last').remove();
-		}*/
 	};
   }
 };
