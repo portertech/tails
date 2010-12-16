@@ -29,9 +29,9 @@ var connect = function() {
 					if (stream == 'alerts')
 						$('#alertsnum').html(++alertsCount);
 					
-					var num_rows = $('#div#logs_container > div#'+stream+'_logs > table > tbody:last > tr').size();
+					var num_rows = $('div#logs_container > div#'+stream+'_logs > table > tbody:last > tr').size();
 					if (num_rows > maxNumRows) {
-						$('#div#logs_container > div#'+stream+'_logs > table > tbody:last > tr:last').remove();
+						$('div#logs_container > div#'+stream+'_logs > table > tbody:last > tr:last').remove();
 					}
 					
 					$('div#logs_container > div#'+stream+'_logs > table > tbody:last').prepend('<tr class="row"><td>'+
@@ -52,7 +52,7 @@ var connect = function() {
 		/* Remove the last line if there are more than maxNumRows */
 		var num_rows = $('div#logs_container > div#all_logs > table > tbody:last > tr').size();
 		if (num_rows > maxNumRows) {
-			$('#div#logs_container > div#all_logs > table > tbody:last > tr:last').remove();
+			$('div#logs_container > div#all_logs > table > tbody:last > tr:last').remove();
 		}
 		
 		/* Show all logs in the main div */
