@@ -24,10 +24,13 @@ var streams = new Array();
 var inAnimation = false;
 
 function displayTerm(element, term) {
-	element.append('<div id="'+term+'" class="term">'+term+' <a href="#">x</a></div>');
+  var div = $("<div/>").attr("id",term).attr("class","term");
+  div.text(term + ' ');
+  div.append('<a href="#">x</a>');
+	element.append(div);
 	
 	/* Term deletion */
- 	element.find('div#'+term+' > a').click(function() {
+ 	div.find('a').click(function() {
 		var term_name = $(this).parent().attr('id');
 		$.ajax({ url: '/streams/'+getCurrentStreamId()+'/terms/'+term_name, type: 'DELETE', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 			if (XMLHttpRequest.status == '204') {
@@ -106,14 +109,26 @@ function setupTabs() {
 
 function addStream(s) {
 	if (s.ID == 'alerts') {
-		$('div#streams').append('<li id="'+s.ID+'" class="alerts"><a href="#">'+s.Name+'(<span id="alertsnum">0</span>)</a></li>');
+	  var streamBlock = $("<li/>").attr("id",s.ID).attr("class","alerts");
+	  var streamLink  = $("<a/>").attr("href","#");
+	  streamLink.text(s.Name);
+	  streamLink.append('(<span id="alertsnum">0</span>)');
+	  streamBlock.append(streamLink);
+	  $('div#streams').append(streamBlock);
 	} else {
-		$('div#streams').append('<li id="'+s.ID+'"><a href="#">'+s.Name+'</a><div class="stream_delete">x</div></li>');
+	  var streamBlock = $("<li/>").attr("id",s.ID);
+	  var streamLink  = $("<a/>").attr("href","#");
+	  streamLink.text(s.Name);
+	  streamBlock.append(streamLink);
+	  streamBlock.append('<div class="stream_delete">x</div>');
+	  $('div#streams').append(streamBlock);
 	}
 	
 	$('div#streams li:last').fadeIn('normal');
-	$('div#logs_container').append('<div id="'+s.ID+'_logs" class="logs_hidden">'+
-		'<div class="terms"></div>'+
+	var div = $('<div/>',{
+	  id: s.ID + '_logs',
+	  class: 'logs_hidden'
+	}).append('<div class="terms"></div>'+
 		'<div class="term_adder"><input type="text" name="term_field"/><a href="#">+</a></div>'+
 		'<div class="clear"></div>'+
 		'<table><thead><tr>'+
@@ -124,7 +139,8 @@ function addStream(s) {
 		'<th class="msg_col">Message</th>'+
 		'</tr></thead>'+
 		'<tbody></tbody></table>');
-	var terms_container = $('div#logs_container > div:last > div.terms');
+	$('div#logs_container').append(div);
+	var terms_container = div.find('div.terms');
 	for (var t in s.Terms) {
 		displayTerm(terms_container, s.Terms[t]);
 	}
