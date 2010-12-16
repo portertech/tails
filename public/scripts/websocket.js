@@ -50,7 +50,8 @@ var connect = function() {
 		}
 		
 		/* Remove the last line if there are more than maxNumRows */
-		var num_rows = $('#div#logs_container > div#all_logs > table > tbody:last > tr').size();
+		var num_rows = $('div#logs_container > div#all_logs > table > tbody:last > tr').size();
+		alert(num_rows);
 		if (num_rows > maxNumRows) {
 			$('#div#logs_container > div#all_logs > table > tbody:last > tr:last').remove();
 		}
