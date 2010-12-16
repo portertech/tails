@@ -60,8 +60,7 @@ var connect = function() {
 			data['date']+'</td><td>'+
 			data['host']+'</td><td>'+
 			data['severity']+'</td><td>'+
-			data['facility']+'</td><td class="message"><div class="hideextra">'+
-			message+'</div></td></tr>');
+			data['facility']+'</td><td class="message"><div class="hideextra">'+data['message']+'</div></td></tr>');
 		
 		$('div#logs_container > div#all_logs > table > tbody:last > tr.row:first').click(function() {
 			$(this).toggleClass('message_expanded');
