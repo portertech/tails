@@ -35,6 +35,8 @@ function serveStatic(req, res, dir, file) {
 				res.writeHead(200, {'Content-Type': 'text/javascript'})
 			} else if (dir == 'stylesheets') {
 				res.writeHead(200, {'Content-Type': 'text/css'})
+			} else if (dir == 'images') {
+				res.writeHead(200, {'Content-Type': 'image/png'})
 			} else {
 				res.writeHead(200, {'Content-Type': 'text/html'})
 			}
