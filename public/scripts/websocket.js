@@ -26,7 +26,8 @@ var connect = function() {
 				}
 				
 				if (matchedTerms > 0) {
-					$('#alertsnum').html(++alertsCount);
+					if (stream == 'alerts')
+						$('#alertsnum').html(++alertsCount);
 					
 					var num_rows = $('#div#logs_container > div#'+stream+'_logs > table > tbody:last > tr:last').size();
 					if (num_rows > maxNumRows) {

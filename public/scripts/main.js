@@ -81,6 +81,9 @@ function setupTabs() {
 		var list_element = $(this).parent();
 		$.ajax({ url: '/streams/'+list_element.attr('id'), type: 'DELETE', timeout: 6000, success: function(data, textStatus, XMLHttpRequest) {
 			// Deleted
+			var stream = $('ul.tabs > li#all > a');
+			switchToStream(stream);
+			$('div#logs_container > div#'+list_element.attr('id')+'_logs').remove();
 			list_element.remove();
 		}});
 	});
