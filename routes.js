@@ -25,6 +25,11 @@ function tails(req, res) {
 	res.end(header({ yield: application() }))
 }
 
+function favicon(req, res) {
+        res.writeHead(200, {'Content-Type': 'image/gif'})
+        res.end()
+}
+
 function serveStatic(req, res, dir, file) {
 	fs.readFile('./public/' + dir + '/' + file, function (err, data) {
 		if (err) {
@@ -171,6 +176,7 @@ function removeTerm(req, res, stream, term) {
 }
 
 exports.urls = clutch.route404([['GET /$', tails],
+				['GET /favicon.ico', favicon],
 				['POST /streams$', createStream],
 				['POST /streams/(.*)/terms$', createTerm],
 				['GET /streams$', getStreams],

@@ -126,8 +126,8 @@ function addStream(s) {
 	
 	$('div#streams li:last').fadeIn('normal');
 	var div = $('<div/>',{
-	  id: s.ID + '_logs',
-	  class: 'logs_hidden'
+	  'id': s.ID + '_logs',
+	  'class': 'logs_hidden'
 	}).append('<div class="terms"></div>'+
 		'<div class="term_adder"><input type="text" name="term_field"/><a href="#">+</a></div>'+
 		'<div class="clear"></div>'+
