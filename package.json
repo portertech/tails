@@ -1,11 +1,11 @@
 {
-	'name': 'tails',
-	'version': '0.0.1',
-	'dependencies': {
-		'websocket-server': '',
-		'nstore': '',
-		'haml': '',
-		'clutch': '',
-		'sanitizer': '',
+	"name": "tails",
+	"version": "0.2.0",
+	"dependencies": {
+		"websocket-server": "",
+		"barricane-db": "",
+		"haml": "",
+		"clutch": "",
+		"sanitizer": ""
 	}
 }
