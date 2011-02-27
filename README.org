@@ -18,7 +18,7 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 *** Interface
   - A browser with WebSocket support
 
-* Configuration
+* Install & Configure
 ** Server
 *** Install with Chef
   For those who are OpsCode Chef users, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
