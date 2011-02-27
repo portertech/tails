@@ -1,9 +1,7 @@
-#+TITLE: Aggregate your syslog messages & filter for those that matter.
+#+TITLE: Aggregate your syslog messages & filter for those that matter in real time.
 #+Options: num:nil
 #+STARTUP: odd
 #+Style: <style> h1,h2,h3 {font-family: arial, helvetica, sans-serif} </style>
-
-Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
 * How It Works
   Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
@@ -110,3 +108,7 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
   curl -iX DELETE localhost/streams/foo/terms/bar
 
   curl -iX DELETE localhost/streams/foo
+
+* Contributors
+  [[https://github.com/portertech][Sean Porter]]
+  [[https://github.com/amdprophet][Justin Kolberg]]
