@@ -13,7 +13,7 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
   - rsyslog or syslog-ng
 
 *** Server
-  - Node.js v0.4.1 http://nodejs.org/
+  - Node.js v0.4.1
 
 *** Interface
   - A browser with WebSocket support
@@ -76,7 +76,7 @@ Be sure to restart the service after the change.
   : destination tails { udp("tails.example.ca" port(514)); };
   : log { source(s_all); destination(tails); };
 
-* How it works
+* How It Works
   Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
 
   The browser is responsible for message filtering, separating them into defined "streams". 
@@ -93,13 +93,20 @@ Be sure to restart the service after the change.
 
   Messages are non-persistent and they are automatically pruned.
 
-* Next
-  - Pause & resume tail (buffer incoming messages, buffer is at x%, forced resume for buffer is full)
-  - Export paused tail to csv
+* What's Next
+  - [ ] Pause & resume tail
+    - buffer incoming messages when paused, force resume when the buffer reaches a certain size
+  - [ ] Export paused tail to csv
 
-curl -id 'name=foo' localhost/streams
-curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
-curl -id 'term=bar' localhost/streams/foo/terms
-curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
-curl -iX DELETE localhost/streams/foo/terms/bar
-curl -iX DELETE localhost/streams/foo
+* CRUD
+  curl -id 'name=foo' localhost/streams
+
+  curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
+
+  curl -id 'term=bar' localhost/streams/foo/terms
+
+  curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
+
+  curl -iX DELETE localhost/streams/foo/terms/bar
+
+  curl -iX DELETE localhost/streams/foo
