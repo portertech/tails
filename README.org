@@ -5,6 +5,23 @@
 
 Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
+* How It Works
+  Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
+
+  The browser is responsible for message filtering, separating them into defined "streams". 
+
+  You can create steams, each with their own filter terms (regular expressions).
+
+  For example: 
+
+  You could tail SSH logins with the term:
+  : sshd
+  
+  Or ignore LDAP messages with the term:
+  : ^(?!.*slapd).*$
+
+  Messages are non-persistent and they are automatically pruned.
+
 * Demo
   You can find a working demo [[http://portertech.no.de/][Here]], protected with HTTP auth (admin:admin).
 
@@ -63,11 +80,9 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
   : cd /opt/tails && sudo nohup node server.js &
 
 ** Clients
-Append the following to your configuration file for your prefered syslog service.
+  Append the following to your configuration file for your prefered syslog service.
 
-Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
-
-Be sure to restart the service after the change.
+  Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
 
 *** Rsyslog
   : *.* @tails.example.ca:514
@@ -76,22 +91,7 @@ Be sure to restart the service after the change.
   : destination tails { udp("tails.example.ca" port(514)); };
   : log { source(s_all); destination(tails); };
 
-* How It Works
-  Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
-
-  The browser is responsible for message filtering, separating them into defined "streams". 
-
-  You can create steams, each with their own filter terms (regular expressions).
-
-  For example: 
-
-  You could tail SSH logins with the term:
-  : sshd
-  
-  Or ignore LDAP messages with the term:
-  : ^(?!.*slapd).*$
-
-  Messages are non-persistent and they are automatically pruned.
+  Restart the service after the change.
 
 * What's Next
   - [ ] Pause & resume tail
