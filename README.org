@@ -22,7 +22,22 @@ Demo: http://portertech.no.de/ username: admin password: admin
   - A browser with WebSocket support
 
 * Configuration
+** Server
+*** Install Node.js v0.4.1
+  : $ cd /usr/local/src
+  : $ wget http://nodejs.org/dist/node-v0.4.1.tar.gz
+  : $ tar -xvf node-v0.4.1.tar.gz
+  : $ cd node-v0.4.1
+  : $ export JOBS=2 # optional, sets number of parallel commands.
+  : $ ./configure --prefix=/usr/local/node
+  : $ make
+  : $ sudo make install
+  : $ export PATH=/usr/local/node/bin:$PATH
+  : $ echo "export PATH=/usr/local/node/bin:$PATH" | sudo tee -a /etc/profile
+  : $ node -v
+
 ** Clients
+Append the following to your configuration file for your prefered syslog service, where "tails.example.ca" is the hostname or IP address of your server running Tails.
 *** Rsyslog
   : *.* @tails.example.ca:514
 *** Syslog-ng
