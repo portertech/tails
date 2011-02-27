@@ -1,6 +1,6 @@
-function Stream(streamName, streamTerms) {
+function Stream(streamName) {
   this.streamName = streamName
-  this.streamTerms = streamTerms
+  this.streamTerms = []
   this.streamEnabled = true
   process.db.registerInstance(this)
 }

@@ -10,7 +10,7 @@ var model = require('./models.js')
 db.openSync()
 
 if (!db.find('streamName', 'alerts')[0]) {
-  new model.Stream('alerts', [])
+  new model.Stream('alerts')
 }
 
 var header = haml(fs.readFileSync('views/layouts/header.haml', 'utf8'))
@@ -57,7 +57,7 @@ function createStream(req, res) {
     if (name) {
       var stream = db.find('streamName', name).pop()
       if (!stream || stream.streamEnabled == false) { 
-        new model.Stream(name, [])
+        new model.Stream(name)
         res.writeHead(201, {'Content-Type': 'text/plain'})
         res.write(name)
       } else {
