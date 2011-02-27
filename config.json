@@ -1,1 +1,13 @@
-{ "version": "v0.4.1" }
+{
+  "version": "v0.4.1",
+  "http": {
+    "auth": {
+      "username": "admin",
+      "password": "admin"
+    },
+    "port": 80
+  },
+  "syslog": {
+    "port": 514
+  }
+}

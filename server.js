@@ -3,6 +3,9 @@ var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http-digest')
 var sanitizer = require('sanitizer')
+var fs = require('fs')
+
+var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
 
 websocket = ws.createServer()
 websocket.listen(8000)
@@ -61,8 +64,8 @@ syslog.on('message', function(msg_orig, rinfo) {
   }
 })
 
-syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || 514
+syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || config.syslog.port
 syslog.bind(syslog_port)
 
-var http_port = parseInt(process.env.TAILS_HTTP_PORT) || 80
-http.createServer("username", "password", require('./routes').urls).listen(http_port)
+var http_port = parseInt(process.env.TAILS_HTTP_PORT) || config.http.port
+http.createServer(config.http.auth.username, config.http.auth.password, require('./routes').urls).listen(http_port)
