@@ -9,7 +9,12 @@ Screenshots: http://i.pgu.me/3PshjFbE_original.png http://i.pgu.me/oCGCzaYi_orig
 
 Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
 
-Demo: http://portertech.no.de/ username: admin password: admin
+* Demo
+  You can find a working demo [[http://portertech.no.de/][Here]]
+
+  Username: admin
+
+  Passord: admin
 
 * Requirements
 *** Clients
@@ -26,8 +31,7 @@ Demo: http://portertech.no.de/ username: admin password: admin
 *** Install Node.js v0.4.1
   : cd /usr/local/src
   : wget http://nodejs.org/dist/node-v0.4.1.tar.gz
-  : tar -xvf node-v0.4.1.tar.gz
-  : cd node-v0.4.1
+  : tar -xvf node-v0.4.1.tar.gz && cd node-v0.4.1
   : export JOBS=2 # optional, sets number of parallel commands.
   : ./configure --prefix=/usr/local/node
   : make
@@ -39,7 +43,7 @@ Demo: http://portertech.no.de/ username: admin password: admin
 *** Install Tails
   : cd /usr/local/src
   : wget https://github.com/downloads/portertech/tails/tails-0.0.1.tar
-  : tar -xvf tails-0.0.1.tar -C /opt
+  : tar -xvf tails-0.0.1.tar -C /opt && cd /opt/tails
 
 *** Configure Tails
   Tails uses a single JSON file for configuration.
