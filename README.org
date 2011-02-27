@@ -22,11 +22,12 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 ** Server
 *** Install with Chef
   For those who are OpsCode Chef users, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
+
 *** Install Node.js v0.4.1
   : cd /usr/local/src
   : wget http://nodejs.org/dist/node-v0.4.1.tar.gz
   : tar -xvf node-v0.4.1.tar.gz && cd node-v0.4.1
-  : export JOBS=2 # optional, sets number of parallel commands.
+  : export JOBS=2
   : ./configure --prefix=/usr/local/node
   : make
   : sudo make install
@@ -63,7 +64,9 @@ Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
 ** Clients
 Append the following to your configuration file for your prefered syslog service.
+
 Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
+
 Be sure to restart the service after the change.
 
 *** Rsyslog
@@ -74,9 +77,21 @@ Be sure to restart the service after the change.
   : log { source(s_all); destination(tails); };
 
 * How it works
-  - Tails accepts syslog messages on port 514 (UDP), parses, then broadcasts to your browser using a WebSocket.
-  - You can create custom tab (streams), each with their own filter terms to organize messages.
-  - Messages are non-persistent and they are automatically pruned.
+  Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
+
+  The browser is responsible for message filtering, separating them into defined "streams". 
+
+  You can create steams, each with their own filter terms (regular expression).
+
+  For example: 
+
+  You could tail SSH logins with the term:
+  : sshd
+  
+  Or ignore LDAP messages
+  : ^(?!.*slapd).*$
+
+  Messages are non-persistent and they are automatically pruned.
 
 * Next
   - Pause & resume tail (buffer incoming messages, buffer is at x%, forced resume for buffer is full)
