@@ -24,22 +24,48 @@ Demo: http://portertech.no.de/ username: admin password: admin
 * Configuration
 ** Server
 *** Install Node.js v0.4.1
-  : $ cd /usr/local/src
-  : $ wget http://nodejs.org/dist/node-v0.4.1.tar.gz
-  : $ tar -xvf node-v0.4.1.tar.gz
-  : $ cd node-v0.4.1
-  : $ export JOBS=2 # optional, sets number of parallel commands.
-  : $ ./configure --prefix=/usr/local/node
-  : $ make
-  : $ sudo make install
-  : $ export PATH=/usr/local/node/bin:$PATH
-  : $ echo "export PATH=/usr/local/node/bin:$PATH" | sudo tee -a /etc/profile
-  : $ node -v
+  : cd /usr/local/src
+  : wget http://nodejs.org/dist/node-v0.4.1.tar.gz
+  : tar -xvf node-v0.4.1.tar.gz
+  : cd node-v0.4.1
+  : export JOBS=2 # optional, sets number of parallel commands.
+  : ./configure --prefix=/usr/local/node
+  : make
+  : sudo make install
+  : export PATH=/usr/local/node/bin:$PATH
+  : echo "export PATH=/usr/local/node/bin:$PATH" | sudo tee -a /etc/profile
+  : node -v
+
+*** Install Tails
+  : cd /usr/local/src
+  : wget https://github.com/downloads/portertech/tails/tails-0.0.1.tar
+  : tar -xvf tails-0.0.1.tar -C /opt
+
+*** Configure Tails
+  Tails uses a single JSON file for configuration.
+  config.json:
+  : {
+  :   "version": "v0.4.1",
+  :   "http": {
+  :     "auth": {
+  :       "username": "admin",
+  :       "password": "admin"
+  :     },
+  :     "port": 80
+  :   },
+  :   "syslog": {
+  :     "port": 514
+  :   }
+  : }
 
 ** Clients
-Append the following to your configuration file for your prefered syslog service, where "tails.example.ca" is the hostname or IP address of your server running Tails.
+Append the following to your configuration file for your prefered syslog service.
+Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
+Be sure to restart the service after the change.
+
 *** Rsyslog
   : *.* @tails.example.ca:514
+
 *** Syslog-ng
   : destination tails { udp("tails.example.ca" port(514)); };
   : log { source(s_all); destination(tails); };
