@@ -12,9 +12,14 @@ Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
 Demo: http://portertech.no.de/ username: admin password: admin
 
 * Requirements
-  - rsyslog or syslog-ng installed & configured on your hosts for remote logging
-  - Node.js for the Tails server http://nodejs.org/
-  - A browser with WebSocket support for the client
+** Clients
+  - rsyslog or syslog-ng
+
+** Server
+  - Node.js v0.4.1 http://nodejs.org/
+
+** Interface
+  - A browser with WebSocket support
 
 * How it works
   - Tails accepts syslog messages on port 514 (UDP), parses, then broadcasts to your browser using a WebSocket.
