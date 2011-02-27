@@ -1,7 +1,7 @@
 // tails, because syslog rocks.
 var ws = require('websocket-server')
 var dgram = require('dgram')
-var http = require('http')
+var http = require('http-digest')
 var sanitizer = require('sanitizer')
 
 websocket = ws.createServer()
@@ -65,4 +65,4 @@ syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || 514
 syslog.bind(syslog_port)
 
 var http_port = parseInt(process.env.TAILS_HTTP_PORT) || 80
-http.createServer(require('./routes').urls).listen(http_port)
+http.createServer("username", "password", require('./routes').urls).listen(http_port)
