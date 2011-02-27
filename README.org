@@ -5,16 +5,8 @@
 
 Tails, live syslog tailing with term filtering by Sean Porter & Justin Kolberg.
 
-Screenshots: http://i.pgu.me/3PshjFbE_original.png http://i.pgu.me/oCGCzaYi_original.png
-
-Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
-
 * Demo
-  You can find a working demo [[http://portertech.no.de/][Here]]
-
-  Username: admin
-
-  Passord: admin
+  You can find a working demo [[http://portertech.no.de/][Here]], protected with HTTP auth (admin:admin).
 
 * Requirements
 *** Clients
@@ -28,6 +20,8 @@ Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
 
 * Configuration
 ** Server
+*** Install with Chef
+  For those who are OpsCode Chef users, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
 *** Install Node.js v0.4.1
   : cd /usr/local/src
   : wget http://nodejs.org/dist/node-v0.4.1.tar.gz
@@ -62,6 +56,10 @@ Screencast: http://www.youtube.com/watch?v=6yJbBRcPs_M&hd=1
   :     "port": 514
   :   }
   : }
+
+*** Run 
+  Node.js process monitoring is outside the scope of this readme, you can run with nohup.
+  : cd /opt/tails && sudo nohup node server.js &
 
 ** Clients
 Append the following to your configuration file for your prefered syslog service.
