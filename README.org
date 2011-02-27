@@ -43,6 +43,7 @@ Demo: http://portertech.no.de/ username: admin password: admin
 
 *** Configure Tails
   Tails uses a single JSON file for configuration.
+
   config.json:
   : {
   :   "version": "v0.4.1",
