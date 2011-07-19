@@ -1,0 +1,25 @@
+{ "name" : "http-digest"
+, "description" : "Enables your web server to use HTTP Digest authentication"
+, "version" : "v0.1.0"
+, "author" : "Emil Loer <emil@koffietijd.net>"
+, "contributors" :
+  [
+  ]
+, "repository" :
+  { "type" : "git"
+  , "url" : "http://github.com/thedjinn/node-http-digest.git"
+  }
+, "bugs" :
+  { "mail" : "emil@koffietijd.net"
+  , "web" : "http://github.com/thedjinn/node-http-digest/issues"
+  }
+, "os" : [ "linux", "darwin", "freebsd" ]
+, "directories" : { "lib" : "./lib/" }
+, "main" : "./lib/http-digest"
+, "engines" : { "node" : ">=0.1.100" }
+, "licenses" :
+  [ { "type" : "MIT"
+    , "url" : "http://github.com/thedjinn/node-http-digest/raw/master/LICENSE"
+    }
+  ]
+}
