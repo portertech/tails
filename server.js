@@ -3,7 +3,9 @@ var fs = require('fs')
 var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
+var chain = require('chain-gang')
 var models = require('./models')
+var db = process.db
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
 
@@ -45,15 +47,9 @@ var facility_lookup = {
   23: 'local7',
 }
 
-websocket = ws.createServer()
-websocket.listen(8000)
-
-db = process.db
-
-fwdPatterns = []
-setInterval(function() {
-  streams = db.find('streamForwarding', true)
+var patterns = function() {
   patterns = []
+  streams = db.find('streamForwarding', true)
   for (var s in streams) {
     var pattern = ''
     for (var t in streams[s].streamTerms) {
@@ -62,8 +58,36 @@ setInterval(function() {
     pattern += '.*'
     patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
   }
-  fwdPatterns = patterns
-}, 5000)
+  return patterns
+}
+
+var loggly = function(msg, token) {
+  return function(worker) {
+    var opts = {
+      host: 'logs.loggly.com',
+      path: '/inputs/' + token,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': msg.length
+      }
+    }
+    var req = http.request(opts)
+    req.write(msg)
+    req.end()
+    worker.finish()
+  }
+}
+
+var fwdPatterns = patterns()
+setInterval(function() {
+  var fwdPatterns = patterns
+}, 10000)
+
+websocket = ws.createServer()
+websocket.listen(8000)
+
+var queue = chain.create({workers: 10})
 
 syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
@@ -81,18 +105,8 @@ syslog.on('message', function(msg_orig, rinfo) {
     for (var p in fwdPatterns) {
       var regex = new RegExp(fwdPatterns[p].pattern, 'i')
       if (regex.test(msg[4])) {
-        var options = {
-          host: 'logs.loggly.com',
-          path: '/inputs/' + fwdPatterns[p].token,
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': msg_info.length
-          }
-        }
-        var req = http.request(options)
-        req.write(msg_info)
-        req.end()
+        queue.add(loggly(msg_info, fwdPatterns[p].token))
+        break
       }
     }
   }

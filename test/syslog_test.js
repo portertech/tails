@@ -13,4 +13,4 @@ setInterval(function() {
       }
       console.log('Wrote ' + bytes + ' bytes to socket.')
   })
-}, 500)
+}, 10)
