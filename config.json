@@ -1,10 +1,6 @@
 {
   "version": "v0.4.9",
   "http": {
-    "auth": {
-      "username": "admin",
-      "password": "admin"
-    },
     "port": 80
   },
   "syslog": {

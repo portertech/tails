@@ -1,5 +1,0 @@
-Create tests
-Add support for multiple users
-Add support for multiple realms
-Customizeable (and realm specific) session expiration times
-Provide a user object to the authenticated callback function

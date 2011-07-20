@@ -2,8 +2,8 @@
 var fs = require('fs')
 var ws = require('websocket-server')
 var dgram = require('dgram')
+var http = require('http')
 var sanitizer = require('sanitizer')
-var http = require('http-digest')
 var loggly = require('loggly')
 var models = require('./models')
 
@@ -50,13 +50,13 @@ var facility_lookup = {
 websocket = ws.createServer()
 websocket.listen(8000)
 
-if (config.loggly.subdomain != "") {
+if (config.loggly.subdomain != '') {
   var beaver = loggly.createClient(config.loggly)
 }
 
 db = process.db
 
-var forwarded_streams = []
+var forwardedStreams = []
 setInterval(function() {
   forwardedStreams = db.find('streamForwarded', true)
 }, 15000)
@@ -83,4 +83,4 @@ syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || config.syslog.port
 syslog.bind(syslog_port)
 
 var http_port = parseInt(process.env.TAILS_HTTP_PORT) || config.http.port
-http.createServer(config.http.auth.username, config.http.auth.password, require('./routes').urls).listen(http_port)
+http.createServer(require('./routes').urls).listen(http_port)

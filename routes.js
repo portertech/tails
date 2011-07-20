@@ -45,7 +45,7 @@ function serveStatic(req, res, dir, file) {
 }
 
 function createStream(req, res) {
-  var requestString = ""
+  var requestString = ''
   req.on('data', function(chunk) {
     requestString += chunk
   })
@@ -61,7 +61,7 @@ function createStream(req, res) {
         res.writeHead(409, 'Stream already exists', {'Content-Type': 'text/plain'})
       }
     } else {
-      res.writeHead(400, 'Missing name field', {'Content-Type': 'text/plain'})
+      res.writeHead(400, 'Missing field - name', {'Content-Type': 'text/plain'})
     }
     res.end()
   })
@@ -72,7 +72,14 @@ function getStreams(req, res) {
   var result = {}
   for (i in streams) {
     var stream = streams[i]
-    result[stream.streamName] = {name: stream.streamName, terms: stream.streamTerms}
+      result[stream.streamName] = {
+        name: stream.streamName,
+        terms: stream.streamTerms,
+        forwarding: {
+          enabled: stream.streamForwarded,
+          token: stream.streamLogglyToken
+        }
+      }
   }
   res.writeHead(200, {'Content-Type': 'application/json'})
   res.end(JSON.stringify(result))
@@ -90,7 +97,7 @@ function removeStream(req, res, name) {
 }
 
 function createTerm(req, res, name) {
-  var requestString = ""
+  var requestString = ''
   req.on('data', function(chunk) {
     requestString += chunk
   })
@@ -104,12 +111,12 @@ function createTerm(req, res, name) {
           res.writeHead(201, {'Content-Type': 'text/plain'})
 	} else {
           res.writeHead(409, 'Term already exists', {'Content-Type': 'text/plain'})
-	}	
+	}
       } else {
         res.writeHead(404, 'Stream does not exist', {'Content-Type': 'text/plain'})
       }
     } else {
-      res.writeHead(400, 'Missing term field', {'Content-Type': 'text/plain'})
+      res.writeHead(400, 'Missing field - term', {'Content-Type': 'text/plain'})
     }
     res.end()     
   })
@@ -126,10 +133,34 @@ function removeTerm(req, res, name, term) {
   res.end()
 }
 
+function toggleForwarding(req, res, name) {
+  var requestString = ''
+  req.on('data', function(chunk) {
+    requestString += chunk
+  })
+  req.on('end', function() {
+    var token = querystring.parse(requestString).token
+    var stream = db.find('streamName', name).pop()
+    if (stream) {
+      if (token) {
+        stream.toggleForwarding(token)
+        res.writeHead(200, {'Content-Type': 'text/plain'})
+        res.write(stream.streamForwarding.toString())
+      } else {
+        res.writeHead(400, 'Missing field - token', {'Content-Type': 'text/plain'})
+      }
+    } else {
+      res.writeHead(404, 'Stream does not exist', {'Content-Type': 'text/plain'})
+    }
+    res.end()
+  })
+}
+
 exports.urls = clutch.route404([['GET /$', tails],
 				['GET /favicon.ico', favicon],
 				['POST /streams$', createStream],
 				['POST /streams/(.*)/terms$', createTerm],
+				['POST /streams/(.*)/forwarding$', toggleForwarding],
 				['GET /streams$', getStreams],
 				['DELETE /streams/(.*)/terms/(.*)$', removeTerm],
 				['DELETE /streams/(.*)$', removeStream],

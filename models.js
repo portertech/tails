@@ -6,7 +6,8 @@ process.db = db
 function Stream(streamName) {
   this.streamName = streamName
   this.streamTerms = []
-  this.streamForwarded = false
+  this.streamForwarding = false
+  this.streamLogglyToken = ''
   this.streamEnabled = true
   db.registerInstance(this)
 }
@@ -26,12 +27,13 @@ Stream.prototype.removeTerm = function(term) {
   db.registerInstance(this)
 }
 
-Stream.prototype.forward = function() {
-  this.streamForwarded = !this.streamForwarded
+Stream.prototype.toggleForwarding = function(token) {
+  this.streamLogglyToken = token
+  this.streamForwarding = !this.streamForwarding
 }
 
 Stream.prototype.disable = function() {
-  this.streamForwarded = false
+  this.streamForwarding = false
   this.streamEnabled = false
 }
 
