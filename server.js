@@ -3,7 +3,6 @@ var fs = require('fs')
 var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
-var request = require('request')
 var models = require('./models')
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
@@ -82,11 +81,18 @@ syslog.on('message', function(msg_orig, rinfo) {
     for (var p in fwdPatterns) {
       var regex = new RegExp(fwdPatterns[p].pattern, 'i')
       if (regex.test(msg[4])) {
-        request.post({
-          uri: 'https://logs.loggly.com/inputs/' + fwdPatterns[p].token,
-          headers: {'content-type': 'application/json'},
-          body: msg_info
-        })
+        var options = {
+          host: 'logs.loggly.com',
+          path: '/inputs/' + fwdPatterns[p].token,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': msg_info.length
+          }
+        }
+        var req = http.request(options)
+        req.write(msg_info)
+        req.end()
       }
     }
   }
