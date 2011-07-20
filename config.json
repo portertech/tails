@@ -5,12 +5,5 @@
   },
   "syslog": {
     "port": 514
-  },
-  "loggly": {
-    "subdomain": "",
-    "auth": {
-      "username": "",
-      "password": ""
-    }
   }
 }

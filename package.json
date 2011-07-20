@@ -1,12 +1,12 @@
 {
   "name": "tails",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "dependencies": {
     "websocket-server": "",
     "barricane-db": "",
     "haml": "",
     "clutch": "",
     "sanitizer": "",
-    "loggly": ""
+    "request": ""
   }
 }

@@ -3,8 +3,7 @@ var fs = require('fs')
 var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
-var sanitizer = require('sanitizer')
-var loggly = require('loggly')
+var request = require('request')
 var models = require('./models')
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
@@ -50,31 +49,45 @@ var facility_lookup = {
 websocket = ws.createServer()
 websocket.listen(8000)
 
-if (config.loggly.subdomain != '') {
-  var beaver = loggly.createClient(config.loggly)
-}
-
 db = process.db
 
-var forwardedStreams = []
+fwdPatterns = []
 setInterval(function() {
-  forwardedStreams = db.find('streamForwarded', true)
-}, 15000)
+  streams = db.find('streamForwarding', true)
+  patterns = []
+  for (var s in streams) {
+    var pattern = ''
+    for (var t in streams[s].streamTerms) {
+      pattern += '(?=.*' + streams[s].streamTerms[t] + ')'
+    }
+    pattern += '.*'
+    patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
+  }
+  fwdPatterns = patterns
+}, 5000)
 
 syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
   var msg = (/<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/).exec(msg_orig)
   if (msg) {
     var facility = Math.floor(msg[1] / 8)
-    var msg_info = {
+    var msg_info = JSON.stringify({
       date: msg[2],
-      host: sanitizer.escape(msg[3]),
+      host: msg[3],
       severity: severity_lookup[msg[1] - (facility * 8)],
       facility: facility_lookup[facility],
-      message: sanitizer.escape(msg[4]),
-    }
-    websocket.broadcast(JSON.stringify(msg_info))
-    for (i in forwardedStreams) {
+      message: msg[4],
+    })
+    websocket.broadcast(msg_info)
+    for (var p in fwdPatterns) {
+      var regex = new RegExp(fwdPatterns[p].pattern, 'i')
+      if (regex.test(msg[4])) {
+        request.post({
+          uri: 'https://logs.loggly.com/inputs/' + fwdPatterns[p].token,
+          headers: {'content-type': 'application/json'},
+          body: msg_info
+        })
+      }
     }
   }
 })
