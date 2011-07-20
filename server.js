@@ -47,20 +47,6 @@ var facility_lookup = {
   23: 'local7',
 }
 
-var patterns = function() {
-  patterns = []
-  streams = db.find('streamForwarding', true)
-  for (var s in streams) {
-    var pattern = ''
-    for (var t in streams[s].streamTerms) {
-      pattern += '(?=.*' + streams[s].streamTerms[t] + ')'
-    }
-    pattern += '.*'
-    patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
-  }
-  return patterns
-}
-
 var loggly = function(msg, token) {
   return function(worker) {
     var opts = {
@@ -79,10 +65,26 @@ var loggly = function(msg, token) {
   }
 }
 
-var fwdPatterns = patterns()
-setInterval(function() {
-  var fwdPatterns = patterns
-}, 10000)
+var fwdPatterns = []
+process.nextTick(function setPatterns() {
+  patterns = []
+  streams = db.find('streamForwarding', true)
+  for (var s in streams) {
+    var pattern = ''
+    for (var t in streams[s].streamTerms) {
+      term = streams[s].streamTerms[t]
+      if (term.search('!') == -1) {
+        pattern += '(?=.*' + term + ')'
+      } else {
+        pattern += '(?!.*' + term.replace('!', '') + ')'
+      }
+    }
+    pattern += '.*'
+    patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
+  }
+  fwdPatterns = patterns
+  setTimeout(setPatterns, 8000)
+})
 
 websocket = ws.createServer()
 websocket.listen(8000)
