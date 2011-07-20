@@ -2,12 +2,9 @@ var fs = require('fs')
 var haml = require('haml')
 var clutch = require('clutch')
 var querystring = require('querystring')
-var bdb = require('barricane-db')
-var db = new bdb.DB({path: './db/', name: 'streams'})
+var model = require('./models')
 
-process.db = db
-var model = require('./models.js')
-db.openSync()
+db = process.db
 
 if (!db.find('streamName', 'alerts')[0]) {
   new model.Stream('alerts')

@@ -1,14 +1,13 @@
 // tails, because syslog rocks.
+var fs = require('fs')
 var ws = require('websocket-server')
 var dgram = require('dgram')
-var http = require('http-digest')
 var sanitizer = require('sanitizer')
-var fs = require('fs')
+var http = require('http-digest')
+var loggly = require('loggly')
+var model = require('./models')
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
-
-websocket = ws.createServer()
-websocket.listen(8000)
 
 var severity_lookup = {
   0: 'emerg',
@@ -48,6 +47,20 @@ var facility_lookup = {
   23: 'local7',
 }
 
+websocket = ws.createServer()
+websocket.listen(8000)
+
+if (config.loggly.subdomain != "") {
+  var beaver = loggly.createClient(config.loggly)
+}
+
+db = process.db
+
+var forwarded_streams = []
+setInterval(function() {
+  forwardedStreams = db.find('streamForwarded', true)
+}, 15000)
+
 syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
   var msg = (/<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/).exec(msg_orig)
@@ -61,6 +74,8 @@ syslog.on('message', function(msg_orig, rinfo) {
       message: sanitizer.escape(msg[4]),
     }
     websocket.broadcast(JSON.stringify(msg_info))
+    for (i in forwardedStreams) {
+    }
   }
 })
 

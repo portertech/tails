@@ -1,17 +1,19 @@
+var bdb = require('barricane-db')
+var db = new bdb.DB({path: './db/', name: 'streams'})
+
+process.db = db
+
 function Stream(streamName) {
   this.streamName = streamName
   this.streamTerms = []
+  this.streamForwarded = false
   this.streamEnabled = true
-  process.db.registerInstance(this)
-}
-
-Stream.prototype.disable = function() {
-  this.streamEnabled = false
+  db.registerInstance(this)
 }
 
 Stream.prototype.createTerm = function(term) {
   this.streamTerms.push(term)
-  process.db.registerInstance(this)
+  db.registerInstance(this)
 }
 
 Stream.prototype.removeTerm = function(term) {
@@ -21,9 +23,20 @@ Stream.prototype.removeTerm = function(term) {
       break
     }
   }
-  process.db.registerInstance(this)
+  db.registerInstance(this)
 }
 
-process.db.registerConstructors(Stream)
+Stream.prototype.forward = function() {
+  this.streamForwarded = !this.streamForwarded
+}
+
+Stream.prototype.disable = function() {
+  this.streamForwarded = false
+  this.streamEnabled = false
+}
+
+db.registerConstructors(Stream)
 
 exports.Stream = Stream
+
+db.openSync()
