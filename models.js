@@ -1,5 +1,5 @@
 var bdb = require('barricane-db')
-var db = new bdb.DB({path: './db/', name: 'streams'})
+var db = new bdb.DB({path: './db/', name: 'tails'})
 
 process.db = db
 

@@ -5,7 +5,7 @@ var dgram = require('dgram')
 var sanitizer = require('sanitizer')
 var http = require('http-digest')
 var loggly = require('loggly')
-var model = require('./models')
+var models = require('./models')
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
 
