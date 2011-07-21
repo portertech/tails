@@ -62,7 +62,6 @@ var loggly = function(msg, token) {
     req.write(msg)
     req.end()
     worker.finish()
-    console.log('sent')
   }
 }
 

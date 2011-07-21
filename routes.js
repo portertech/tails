@@ -76,7 +76,7 @@ function getStreams(req, res) {
         name: stream.streamName,
         terms: stream.streamTerms,
         forwarding: {
-          enabled: stream.streamForwarded,
+          enabled: stream.streamForwarding,
           token: stream.streamLogglyToken
         }
       }
