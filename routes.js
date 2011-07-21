@@ -23,20 +23,23 @@ function favicon(req, res) {
   res.end()
 }
 
-function serveStatic(req, res, dir, file) {
+function getStatic(req, res, dir, file) {
   fs.readFile('./public/' + dir + '/' + file, function (err, data) {
     if (err) {
-      console.log(err)
       res.writeHead(404, {'Content-Type': 'text/plain'})
     } else {
-      if (dir == 'scripts') {
-        res.writeHead(200, {'Content-Type': 'text/javascript'})
-      } else if (dir == 'stylesheets') {
-        res.writeHead(200, {'Content-Type': 'text/css'})
-      } else if (dir == 'images') {
-        res.writeHead(200, {'Content-Type': 'image/png'})
-      } else {
-        res.writeHead(200, {'Content-Type': 'text/html'})
+      switch (dir) {
+        case 'scripts':
+          res.writeHead(200, {'Content-Type': 'text/javascript'})
+          break
+        case 'stylesheets':
+          res.writeHead(200, {'Content-Type': 'text/css'})
+          break
+        case 'images':
+          res.writeHead(200, {'Content-Type': 'image/png'})
+          break
+        default:
+          res.writeHead(200, {'Content-Type': 'text/html'})
       }
       res.write(data)
     }
@@ -164,4 +167,4 @@ exports.urls = clutch.route404([['GET /$', tails],
 				['GET /streams$', getStreams],
 				['DELETE /streams/(.*)/terms/(.*)$', removeTerm],
 				['DELETE /streams/(.*)$', removeStream],
-				['GET /(.*)/(.*)$', serveStatic]])
+				['GET /(.*)/(.*)$', getStatic]])
