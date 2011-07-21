@@ -52,7 +52,7 @@ function createStream(req, res) {
   req.on('data', function(chunk) {
     requestString += chunk
   })
-  req.on('end' , function() {
+  req.on('end', function() {
     var name = querystring.parse(requestString).name    
     if (name) {
       var stream = db.find('streamName', name).pop()
