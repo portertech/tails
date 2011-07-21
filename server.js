@@ -62,6 +62,7 @@ var loggly = function(msg, token) {
     req.write(msg)
     req.end()
     worker.finish()
+    console.log('sent')
   }
 }
 
@@ -72,12 +73,7 @@ process.nextTick(function setPatterns() {
   for (var s in streams) {
     var pattern = ''
     for (var t in streams[s].streamTerms) {
-      term = streams[s].streamTerms[t]
-      if (term.search('!') == -1) {
-        pattern += '(?=.*' + term + ')'
-      } else {
-        pattern += '(?!.*' + term.replace('!', '') + ')'
-      }
+      pattern += '(?=.*' + streams[s].streamTerms[t] + ')'
     }
     pattern += '.*'
     patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
