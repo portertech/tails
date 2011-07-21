@@ -73,16 +73,16 @@ function createStream(req, res) {
 function getStreams(req, res) {
   var streams = db.find('streamEnabled', true)
   var result = {}
-  for (i in streams) {
+  for (var i in streams) {
     var stream = streams[i]
-      result[stream.streamName] = {
-        name: stream.streamName,
-        terms: stream.streamTerms,
-        forwarding: {
-          enabled: stream.streamForwarding,
-          token: stream.streamLogglyToken
-        }
+    result[stream.streamName] = {
+      name: stream.streamName,
+      terms: stream.streamTerms,
+      forwarding: {
+        enabled: stream.streamForwarding,
+        token: stream.streamLogglyToken
       }
+    }
   }
   res.writeHead(200, {'Content-Type': 'application/json'})
   res.end(JSON.stringify(result))

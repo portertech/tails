@@ -67,8 +67,8 @@ var loggly = function(msg, token) {
 
 var fwdPatterns = []
 process.nextTick(function setPatterns() {
-  patterns = []
-  streams = db.find('streamForwarding', true)
+  var patterns = []
+  var streams = db.find('streamForwarding', true)
   for (var s in streams) {
     var pattern = ''
     for (var t in streams[s].streamTerms) {
@@ -81,12 +81,12 @@ process.nextTick(function setPatterns() {
   setTimeout(setPatterns, 8000)
 })
 
-websocket = ws.createServer()
+var websocket = ws.createServer()
 websocket.listen(8000)
 
 var queue = chain.create({workers: 10})
 
-syslog = dgram.createSocket('udp4')
+var syslog = dgram.createSocket('udp4')
 syslog.on('message', function(msg_orig, rinfo) {
   var msg = (/<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/).exec(msg_orig)
   if (msg) {
@@ -109,7 +109,7 @@ syslog.on('message', function(msg_orig, rinfo) {
   }
 })
 
-syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || config.syslog.port
+var syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || config.syslog.port
 syslog.bind(syslog_port)
 
 var http_port = parseInt(process.env.TAILS_HTTP_PORT) || config.http.port
