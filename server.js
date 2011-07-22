@@ -49,23 +49,24 @@ var facility_lookup = {
 
 var loggly = function(msg, token) {
   return function(worker) {
+    data = JSON.stringify(msg)
     var opts = {
       host: 'logs.loggly.com',
       path: '/inputs/' + token,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': msg.length
+        'Content-Length': data.length
       }
     }
     var req = http.request(opts)
-    req.write(JSON.stringify(msg))
+    req.write(data)
     req.end()
     worker.finish()
   }
 }
 
-var fwdPatterns = []
+var logglyPatterns = []
 process.nextTick(function setPatterns() {
   var patterns = []
   var streams = db.find('streamForwarding', true)
@@ -77,7 +78,7 @@ process.nextTick(function setPatterns() {
     pattern += '.*'
     patterns.push({pattern: pattern, token: streams[s].streamLogglyToken})
   }
-  fwdPatterns = patterns
+  logglyPatterns = patterns
   setTimeout(setPatterns, 8000)
 })
 
@@ -95,13 +96,13 @@ syslog.on('message', function(msg_orig, rinfo) {
       host: msg[3],
       severity: severity_lookup[msg[1] - (facility * 8)],
       facility: facility_lookup[facility],
-      message: msg[4],
+      message: msg[4]
     }
     websocket.sockets.volatile.emit('msg', msg_info)
-    for (var p in fwdPatterns) {
-      var regex = new RegExp(fwdPatterns[p].pattern, 'i')
+    for (var p in logglyPatterns) {
+      var regex = new RegExp(logglyPatterns[p].pattern, 'i')
       if (regex.test(msg[4])) {
-        queue.add(loggly(msg_info, fwdPatterns[p].token))
+        queue.add(loggly(msg_info, logglyPatterns[p].token))
         break
       }
     }
