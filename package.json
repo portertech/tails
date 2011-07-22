@@ -2,7 +2,8 @@
   "name": "tails",
   "version": "0.2.2",
   "dependencies": {
-    "websocket-server": "",
+    "chain-gang": "",
+    "socket.io": "",
     "barricane-db": "",
     "haml": "",
     "clutch": ""

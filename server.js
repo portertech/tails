@@ -1,8 +1,8 @@
 // tails, because syslog rocks.
 var fs = require('fs')
-var ws = require('websocket-server')
 var dgram = require('dgram')
 var http = require('http')
+var io = require('socket.io')
 var chain = require('chain-gang')
 var models = require('./models')
 var db = process.db
@@ -59,7 +59,7 @@ var loggly = function(msg, token) {
       }
     }
     var req = http.request(opts)
-    req.write(msg)
+    req.write(JSON.stringify(msg))
     req.end()
     worker.finish()
   }
@@ -81,8 +81,7 @@ process.nextTick(function setPatterns() {
   setTimeout(setPatterns, 8000)
 })
 
-var websocket = ws.createServer()
-websocket.listen(8000)
+var websocket = io.listen(8000)
 
 var queue = chain.create({workers: 10})
 
@@ -91,14 +90,14 @@ syslog.on('message', function(msg_orig, rinfo) {
   var msg = (/<([^>]+)>([A-Z][a-z]+\s+\d+\s\d+:\d+:\d+) ([^\s]+) (.*)/).exec(msg_orig)
   if (msg) {
     var facility = Math.floor(msg[1] / 8)
-    var msg_info = JSON.stringify({
+    var msg_info = {
       date: msg[2],
       host: msg[3],
       severity: severity_lookup[msg[1] - (facility * 8)],
       facility: facility_lookup[facility],
       message: msg[4],
-    })
-    websocket.broadcast(msg_info)
+    }
+    websocket.sockets.volatile.emit('msg', msg_info)
     for (var p in fwdPatterns) {
       var regex = new RegExp(fwdPatterns[p].pattern, 'i')
       if (regex.test(msg[4])) {
