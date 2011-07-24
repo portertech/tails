@@ -5,11 +5,13 @@ var http = require('http')
 var io = require('socket.io')
 var chain = require('chain-gang')
 var models = require('./models')
-var db = process.db
+var webui = require('./api')
 
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
 
-var severity_lookup = {
+var db = process.db
+
+var severityLookup = {
   0: 'emerg',
   1: 'alert',
   2: 'crit',
@@ -20,7 +22,7 @@ var severity_lookup = {
   7: 'debug',
 }
 
-var facility_lookup = {
+var facilityLookup = {
   0: 'kern',
   1: 'user',
   2: 'mail',
@@ -94,8 +96,8 @@ syslog.on('message', function(msg_orig, rinfo) {
     var msg_info = {
       date: msg[2],
       host: msg[3],
-      severity: severity_lookup[msg[1] - (facility * 8)],
-      facility: facility_lookup[facility],
+      severity: severityLookup[msg[1] - (facility * 8)],
+      facility: facilityLookup[facility],
       message: msg[4]
     }
     websocket.sockets.volatile.emit('msg', msg_info)
@@ -113,4 +115,4 @@ var syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || config.syslog.port
 syslog.bind(syslog_port)
 
 var http_port = parseInt(process.env.TAILS_HTTP_PORT) || config.http.port
-http.createServer(require('./routes').urls).listen(http_port)
+webui.api.listen(http_port)

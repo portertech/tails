@@ -6,6 +6,7 @@
     "socket.io": "",
     "barricane-db": "",
     "haml": "",
-    "clutch": ""
+    "restify": "",
+    "mime": ""
   }
 }
