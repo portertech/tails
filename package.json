@@ -6,6 +6,35 @@
     "socket.io": "",
     "barricane-db": "",
     "haml": "",
-    "clutch": ""
-  }
+    "restify": "",
+    "mime": ""
+  },
+  "engines": {
+    "node": ">=0.4.9"
+  },
+  "bin": {
+    "tails": "./bin/tails"
+  },
+  "author": "Sean Porter <portertech@gmail.com>",
+  "contributors": [
+    {
+      "name": "Sean Porter",
+      "email": "portertech@gmail.com"
+    },
+    {
+      "name": "Justin Kolberg",
+      "email": "justinkolberg@aelatis.com"
+    }
+  ],
+  "homepage": "https://github.com/portertech/tails",
+  "repository": {
+    "type": "git",
+    "url" : "git://github.com/portertech/tails.git"
+  },
+  "keywords": [
+    "syslog",
+    "logging",
+    "tails",
+    "loggly"
+  ]
 }

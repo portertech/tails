@@ -1,9 +1,0 @@
-{
-  "version": "v0.4.9",
-  "http": {
-    "port": 80
-  },
-  "syslog": {
-    "port": 514
-  }
-}
