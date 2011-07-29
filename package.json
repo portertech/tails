@@ -15,6 +15,7 @@
   "bin": {
     "tails": "./bin/tails"
   },
+  "description": "Aggregate your syslog messages & filter for those that matter in real time.",
   "author": "Sean Porter <portertech@gmail.com>",
   "contributors": [
     {
@@ -26,7 +27,6 @@
       "email": "justinkolberg@aelatis.com"
     }
   ],
-  "homepage": "https://github.com/portertech/tails",
   "repository": {
     "type": "git",
     "url" : "git://github.com/portertech/tails.git"
