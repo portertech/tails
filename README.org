@@ -33,8 +33,7 @@
   For those who use OpsChef, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
 
 *** Install Node.js & NPM
-  Please refer to Joyent's fantastic documentation
-  : https://github.com/joyent/node/wiki/Installation
+  Please refer to Joyent's fantastic [[https://github.com/joyent/node/wiki/Installation][Documentation]].
 
 *** Install Tails
   : npm install tails -g
@@ -51,7 +50,7 @@
   Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
 
 *** Rsyslog
-  : $template FwdTmp,"<%%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
+  : $template FwdTmp,"<%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
   : $ActionForwardDefaultTemplate FwdTmp
   : *.* @tails.example.ca:5140
 
@@ -59,24 +58,21 @@
   : destination tails { udp("tails.example.ca" port(5140)); };
   : log { source(s_all); destination(tails); };
 
-  Restart the service after the change.
+  Restart the service after making the change.
 
 * What's Next
+  - [ ] Clean up client side Javascript
   - [ ] Take a snapshot of a stream (persist)
   - [ ] Export a stream snapshot to JSON or CSV
 
 * CRUD
-  curl -id 'name=foo' localhost/streams
-
-  curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
-
-  curl -id 'term=bar' localhost/streams/foo/terms
-
-  curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
-
-  curl -iX DELETE localhost/streams/foo/terms/bar
-
-  curl -iX DELETE localhost/streams/foo
+  : curl -id 'name=foo' localhost/streams
+  : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
+  : curl -id 'term=bar' localhost/streams/foo/terms
+  : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
+  : curl -id 'token=bigtoken' localhost:8080/streams/foo/forwarding
+  : curl -iX DELETE localhost/streams/foo/terms/bar
+  : curl -iX DELETE localhost/streams/foo
 
 * Contributors
   [[https://github.com/portertech][Sean Porter]]
