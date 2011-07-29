@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+var syslog = require('../lib/syslog')
+var api = require('../lib/api')
+
+var syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || 80
+syslog.server.bind(syslog_port)
+
+var http_port = parseInt(process.env.TAILS_HTTP_PORT) || 8080
+api.server.listen(http_port)
