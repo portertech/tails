@@ -25,54 +25,25 @@
   - rsyslog or syslog-ng
 
 *** Server
-  - Node.js v0.4.1
-
-*** Interface
-  - A browser with WebSocket support
+  - Node.js >= v0.4.9
 
 * Install & Configure
 ** Server
 *** Install with Chef
-  For those who are OpsCode Chef users, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
+  For those who use OpsChef, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
 
-*** Install Node.js v0.4.1
-  : cd /usr/local/src
-  : wget http://nodejs.org/dist/node-v0.4.1.tar.gz
-  : tar -xvf node-v0.4.1.tar.gz && cd node-v0.4.1
-  : export JOBS=2
-  : ./configure --prefix=/usr/local/node
-  : make
-  : sudo make install
-  : export PATH=/usr/local/node/bin:$PATH
-  : echo "export PATH=/usr/local/node/bin:$PATH" | sudo tee -a /etc/profile
-  : node -v
+*** Install Node.js & NPM
+  Please refer to Joyent's fantastic documentation
+  : https://github.com/joyent/node/wiki/Installation
 
 *** Install Tails
-  : cd /usr/local/src
-  : wget https://github.com/downloads/portertech/tails/tails-0.0.1.tar
-  : tar -xvf tails-0.0.1.tar -C /opt && cd /opt/tails
-
-*** Configure Tails
-  Tails uses a single JSON file for configuration.
-
-  config.json:
-  : {
-  :   "version": "v0.4.1",
-  :   "http": {
-  :     "auth": {
-  :       "username": "admin",
-  :       "password": "admin"
-  :     },
-  :     "port": 80
-  :   },
-  :   "syslog": {
-  :     "port": 514
-  :   }
-  : }
-
+  : npm install tails -g
+  
 *** Run 
   Node.js process monitoring is outside the scope of this readme, you can run with nohup.
-  : cd /opt/tails && sudo nohup node server.js &
+  : export TAILS_SYSLOG_PORT=5140
+  : export TAILS_HTTP_PORT=8080
+  : nohup tails &
 
 ** Clients
   Append the following to your configuration file for your prefered syslog service.
@@ -80,18 +51,19 @@
   Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
 
 *** Rsyslog
-  : *.* @tails.example.ca:514
+  : $template FwdTmp,"<%%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
+  : $ActionForwardDefaultTemplate FwdTmp
+  : *.* @tails.example.ca:5140
 
 *** Syslog-ng
-  : destination tails { udp("tails.example.ca" port(514)); };
+  : destination tails { udp("tails.example.ca" port(5140)); };
   : log { source(s_all); destination(tails); };
 
   Restart the service after the change.
 
 * What's Next
-  - [ ] Pause & resume tail
-    - buffer incoming messages when paused, force resume when the buffer reaches a certain size
-  - [ ] Export paused tail to csv
+  - [ ] Take a snapshot of a stream (persist)
+  - [ ] Export a stream snapshot to JSON or CSV
 
 * CRUD
   curl -id 'name=foo' localhost/streams
