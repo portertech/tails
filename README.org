@@ -4,11 +4,13 @@
 #+Style: <style> h1,h2,h3 {font-family: arial, helvetica, sans-serif} </style>
 
 * How It Works
-  Tails acts as a syslog server, collecting messages via UDP. Messages are broadcasted to your browser using a HTML 5 WebSocket.
+  Tails acts as a syslog server, collecting messages via UDP. Messages are delivered to your browser using an HTML 5 WebSocket.
 
   The browser is responsible for message filtering, separating them into defined "streams". 
 
   You can create steams, each with their own filter terms.
+
+  Streams can be forwarded to [[http://loggly.com/][loggly]], a cloud based logging platform.
 
   For example: 
 
@@ -20,23 +22,13 @@
   
   Messages are non-persistent and they are automatically pruned.
 
-* Demo
-  You can find a working demo [[http://portertech.no.de/][Here]], protected with HTTP auth (admin:admin).
-
-* Requirements
-*** Clients
-  - rsyslog or syslog-ng
-
-*** Server
-  - Node.js >= v0.4.9
-
 * Install & Configure
 ** Server
 *** Install with Chef
-  For those who use OpsChef, a cookbook is available [[https://github.com/portertech/cooking-tails][Here]].
+  For those who use OpsChef, a cookbook is available [[https://github.com/portertech/cooking-tails][here]].
 
 *** Install Node.js & NPM
-  Please refer to Joyent's fantastic [[https://github.com/joyent/node/wiki/Installation][Documentation]].
+  Please refer to Joyent's fantastic [[https://github.com/joyent/node/wiki/Installation][documentation]].
 
 *** Install Tails
   : npm install tails -g
@@ -48,13 +40,13 @@
   : nohup tails &
 
 ** Clients
-  Append the following to your configuration file for your prefered syslog service.
+  Append the following to your prefered syslog service configuration file.
 
   Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
 
 *** Rsyslog
-  : $template FwdTmp,"<%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
-  : $ActionForwardDefaultTemplate FwdTmp
+  : $template FwdTails,"<%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
+  : $ActionForwardDefaultTemplate FwdTails
   : *.* @tails.example.ca:5140
 
 *** Syslog-ng
@@ -73,7 +65,7 @@
   : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
   : curl -id 'term=bar' localhost/streams/foo/terms
   : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
-  : curl -id 'token=bigtoken' localhost:8080/streams/foo/forwarding
+  : curl -id 'token=loggly-input-token' localhost:8080/streams/foo/forwarding
   : curl -iX DELETE localhost/streams/foo/terms/bar
   : curl -iX DELETE localhost/streams/foo
 
