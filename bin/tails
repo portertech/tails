@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-var fs = require('fs')
 var syslog = require('../lib/syslog')
 var api = require('../lib/api')
 
