@@ -14,6 +14,9 @@
 
   You could tail SSH logins with the term:
   : sshd
+
+  Or ignore LDAP messages with the term:
+  : !slapd
   
   Messages are non-persistent and they are automatically pruned.
 
