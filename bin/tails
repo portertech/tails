@@ -1,10 +1,20 @@
 #!/usr/bin/env node
 
+var options = require("nomnom").opts({
+  syslog: {
+    default: 5140,
+    metavar: "PORT",
+    help: 'Default: 5140'
+  },
+  http: {
+    default: 8080,
+    metavar: "PORT",
+    help: "Default: 8080"
+  }
+}).parseArgs()
+
 var syslog = require('../lib/syslog')
 var api = require('../lib/api')
 
-var syslog_port = parseInt(process.env.TAILS_SYSLOG_PORT) || 80
-syslog.server.bind(syslog_port)
-
-var http_port = parseInt(process.env.TAILS_HTTP_PORT) || 8080
-api.server.listen(http_port)
+syslog.server.bind(options.syslog)
+api.server.listen(options.http)

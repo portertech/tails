@@ -35,8 +35,11 @@
   
 *** Run 
   Node.js process monitoring is outside the scope of this readme, you can run with nohup.
-  : export TAILS_SYSLOG_PORT=5140
-  : export TAILS_HTTP_PORT=8080
+  : tails -h
+  : usage: tails [options]
+  : options:
+  :   --syslog PORT   Default: 5140
+  :   --http PORT     Default: 8080
   : nohup tails &
 
 ** Clients
