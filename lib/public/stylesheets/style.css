@@ -124,6 +124,30 @@ div#content div#logs_container div.terms div a:hover
 	color: #fd6512;
 }
 
+div#content div#logs_container div.settings
+{
+        float: right;
+        margin-left: 7px;
+}
+
+div#content div#logs_container div.settings a
+{
+	float: right;
+	padding: 5px 7px;
+	color: #666;
+	background-color: #e0e0e0;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+div#content div#logs_container div.settings a:hover
+{
+	background-color: #fd6512;
+	color: #fff;
+}
+
 div#content div#logs_container div.term_adder
 {
 	float: right;
@@ -219,9 +243,22 @@ div#new_stream_form
 	font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
+div#stream_settings_form
+{
+        margin: 0 auto;
+        text-align: center;
+        padding: 28px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
 div#new_stream_form h1
 {
 	font-size: 1.6em;
+}
+
+div#stream_settings_form h1
+{
+        font-size: 1.6em;
 }
 
 div#new_stream_form label
@@ -232,9 +269,22 @@ div#new_stream_form label
 	font-size: 1.0em;
 }
 
+div#stream_settings_form label
+{
+        color: #ccc;
+        font-weight: bold;
+        margin-right: 7px;
+        font-size: 1.0em;
+}
+
 div#new_stream_form input[type="button"]
 {
 	margin-left: 28px;
+}
+
+div#stream_settings_form input[type="button"]
+{
+        margin-left: 28px;
 }
 
 div.error
