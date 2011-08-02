@@ -23,10 +23,6 @@
     %label{ for: 'stream_name' } Stream name: 
     %input{ type: 'text', id: 'stream_name' }
     %input{ type: 'button', value: 'Create', id: 'create_stream' }
-%div.apple_overlay.black#stream_settings_modal
-  %div#stream_settings_form
-    %div.error
-    %h1 Stream Settings
-    %label{ for: 'loggly_token' } Loggly Token: 
-    %input{ type: 'text', id: 'loggly_token' }
-    %input{ type: 'button', value: 'Save', id: 'save_settings' }
+
+%div#settings_containers
+

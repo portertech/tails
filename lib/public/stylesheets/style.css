@@ -243,7 +243,7 @@ div#new_stream_form
 	font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-div#stream_settings_form
+div.stream_settings_form
 {
         margin: 0 auto;
         text-align: center;
@@ -256,7 +256,7 @@ div#new_stream_form h1
 	font-size: 1.6em;
 }
 
-div#stream_settings_form h1
+div.stream_settings_form h1
 {
         font-size: 1.6em;
 }
@@ -269,7 +269,7 @@ div#new_stream_form label
 	font-size: 1.0em;
 }
 
-div#stream_settings_form label
+div.stream_settings_form label
 {
         color: #ccc;
         font-weight: bold;
@@ -282,7 +282,7 @@ div#new_stream_form input[type="button"]
 	margin-left: 28px;
 }
 
-div#stream_settings_form input[type="button"]
+div.stream_settings_form input[type="button"]
 {
         margin-left: 28px;
 }
