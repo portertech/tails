@@ -1,7 +1,4 @@
 #+TITLE: Aggregate your syslog messages & filter for those that matter in real time.
-#+Options: num:nil
-#+STARTUP: odd
-#+Style: <style> h1,h2,h3 {font-family: arial, helvetica, sans-serif} </style>
 
 * How It Works
   Tails acts as a syslog server, collecting messages via UDP. Messages are delivered to your browser using an HTML 5 WebSocket.
