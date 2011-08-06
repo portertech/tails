@@ -42,12 +42,15 @@
   : options:
   :   --syslog PORT   Default: 5140
   :   --http PORT     Default: 8080
+  : 
   : nohup tails &
 
 ** Clients
   Append the following to your prefered syslog service configuration file.
 
   Replace "tails.example.ca" with the hostname or IP address of your server running Tails.
+
+  Be sure to configure the correct port, Tails listens on 5140 by default.
 
 *** Rsyslog
   : $template FwdTails,"<%PRI%>%TIMESTAMP% %HOSTNAME% %APP-NAME% %PROCID% %msg%"
