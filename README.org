@@ -64,13 +64,14 @@
   - [ ] Export a stream snapshot to JSON or CSV
 
 * CRUD
-  : curl -id 'name=foo' localhost/streams
-  : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":[]}
-  : curl -id 'term=bar' localhost/streams/foo/terms
-  : curl -i localhost/streams --> {"foo":{"name": "foo", "terms":["bar"]}}
+  : curl -id 'name=foo' localhost:8080/streams
+  : curl -i localhost:8080/streams --> {"foo":{"name":"foo","terms":[],"forwarding":{"enabled":false,"token":""}}}
+  : curl -id 'term=bar' localhost:8080/streams/foo/terms
+  : curl -i localhost:8080/streams --> {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":false,"token":""}}}
   : curl -id 'token=loggly-input-token' localhost:8080/streams/foo/forwarding
-  : curl -iX DELETE localhost/streams/foo/terms/bar
-  : curl -iX DELETE localhost/streams/foo
+  : curl -i localhost:8080/streams --> {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":true,"token":"loggly-input-token"}}}
+  : curl -iX DELETE localhost:8080/streams/foo/terms/bar
+  : curl -iX DELETE localhost:8080/streams/foo
 
 * Contributors
   [[https://github.com/portertech][Sean Porter]]
