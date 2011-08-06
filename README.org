@@ -20,7 +20,7 @@
   Messages are non-persistent and they are automatically pruned.
 
 * Demo
-  Coming soon...
+  Available [[http://portertech.no.de][here]]
 
 * Install & Configure
 ** Server
