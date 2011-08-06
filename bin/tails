@@ -16,5 +16,8 @@ var options = require("nomnom").opts({
 var syslog = require('../lib/syslog')
 var api = require('../lib/api')
 
-syslog.server.bind(options.syslog)
-api.server.listen(options.http)
+var syslogPort = process.env.TAILS_SYSLOG_PORT || options.syslog
+var httpPort = process.env.TAILS_HTTP_PORT || options.http
+
+syslog.server.bind(syslogPort)
+api.server.listen(httpPort)
