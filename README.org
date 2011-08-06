@@ -17,7 +17,7 @@
   Or ignore LDAP messages with the term:
   : !slapd
 
-  Loggly forwarding requires a [[http://loggly.com/blog/2011/06/on-the-way-to-impressive/][JSON enabled HTTP input]].
+  Loggly forwarding requires a [[http://loggly.com/blog/2011/06/on-the-way-to-impressive/][JSON enabled HTTP input]]. Each stream has a URL token unique to a Loggly input (Stream Settings).
 
   Messages are non-persistent and they are automatically pruned.
 
@@ -67,15 +67,22 @@
 
 * CRUD
   : curl -id 'name=foo' localhost:8080/streams
+  : 
   : curl -i localhost:8080/streams
   :   {"foo":{"name":"foo","terms":[],"forwarding":{"enabled":false,"token":""}}}
+  : 
   : curl -id 'term=bar' localhost:8080/streams/foo/terms
+  : 
   : curl -i localhost:8080/streams
   :   {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":false,"token":""}}}
+  : 
   : curl -id 'token=loggly-input-token' localhost:8080/streams/foo/forwarding
+  : 
   : curl -i localhost:8080/streams
   :   {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":true,"token":"loggly-input-token"}}}
+  : 
   : curl -iX DELETE localhost:8080/streams/foo/terms/bar
+  : 
   : curl -iX DELETE localhost:8080/streams/foo
 
 * Contributors
