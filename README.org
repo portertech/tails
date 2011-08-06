@@ -16,7 +16,9 @@
 
   Or ignore LDAP messages with the term:
   : !slapd
-  
+
+  Loggly forwarding requires a [[http://loggly.com/blog/2011/06/on-the-way-to-impressive/][JSON enabled HTTP input]].
+
   Messages are non-persistent and they are automatically pruned.
 
 * Demo
