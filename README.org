@@ -67,11 +67,14 @@
 
 * CRUD
   : curl -id 'name=foo' localhost:8080/streams
-  : curl -i localhost:8080/streams --> {"foo":{"name":"foo","terms":[],"forwarding":{"enabled":false,"token":""}}}
+  : curl -i localhost:8080/streams
+  :   {"foo":{"name":"foo","terms":[],"forwarding":{"enabled":false,"token":""}}}
   : curl -id 'term=bar' localhost:8080/streams/foo/terms
-  : curl -i localhost:8080/streams --> {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":false,"token":""}}}
+  : curl -i localhost:8080/streams
+  :   {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":false,"token":""}}}
   : curl -id 'token=loggly-input-token' localhost:8080/streams/foo/forwarding
-  : curl -i localhost:8080/streams --> {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":true,"token":"loggly-input-token"}}}
+  : curl -i localhost:8080/streams
+  :   {"foo":{"name": "foo", "terms":["bar"],"forwarding":{"enabled":true,"token":"loggly-input-token"}}}
   : curl -iX DELETE localhost:8080/streams/foo/terms/bar
   : curl -iX DELETE localhost:8080/streams/foo
 
