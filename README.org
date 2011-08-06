@@ -19,6 +19,9 @@
   
   Messages are non-persistent and they are automatically pruned.
 
+* Demo
+  Coming soon...
+
 * Install & Configure
 ** Server
 *** Install with Chef
